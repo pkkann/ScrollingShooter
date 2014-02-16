@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package states;
 
 import game.FontManager;
 import game.Game;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jellygui.JellyButton;
 import jellygui.JellyCheckbox;
 import org.newdawn.slick.Color;
@@ -17,17 +19,20 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import settings.SettingsTool;
 
 /**
  *
  * @author Patrick
  */
 public class SettingsState extends BasicGameState {
-    
+
     private int id;
     private JellyButton backButton;
+    private JellyButton saveButton;
     private JellyCheckbox vsyncBox;
-    
+    private JellyCheckbox verboseBox;
+
     public SettingsState(int id) {
         this.id = id;
     }
@@ -45,19 +50,22 @@ public class SettingsState extends BasicGameState {
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         FontManager.titleFont.drawString(150, 100, "SETTINGS", Color.white);
-        g.drawString("All settings are set instantly", 150, 140);
         vsyncBox.draw(g, 400, 200);
+        verboseBox.draw(g, 400, 250);
         backButton.draw(g, 700, 550);
+        saveButton.draw(g, 600, 550);
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         vsyncBox.update(container, game, delta);
+        verboseBox.update(container, game, delta);
         backButton.update(container, game, delta);
-        container.setVSync(this.vsyncBox.isChecked());
+        saveButton.update(container, game, delta);
     }
-    
+
     private void initGUI(GameContainer container, StateBasedGame game) throws SlickException {
+        //BackButton
         backButton = new JellyButton() {
 
             @Override
@@ -68,11 +76,43 @@ public class SettingsState extends BasicGameState {
         backButton.setIconNormal(new Image("res/gui/back.png"));
         backButton.setIconHover(new Image("res/gui/back_wbg.png"));
         
+        //VSyncBox
         vsyncBox = new JellyCheckbox();
         vsyncBox.setLabel("VSYNC");
         vsyncBox.setCheckedImage(new Image("res/gui/checkbox_checked.png"));
         vsyncBox.setUncheckedImage(new Image("res/gui/checkbox_unchecked.png"));
-        vsyncBox.setChecked(container.isVSyncRequested());
+        vsyncBox.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("vsync"));
+        
+        //VerboseBOx
+        verboseBox = new JellyCheckbox();
+        verboseBox.setLabel("VERBOSE");
+        verboseBox.setCheckedImage(new Image("res/gui/checkbox_checked.png"));
+        verboseBox.setUncheckedImage(new Image("res/gui/checkbox_unchecked.png"));
+        verboseBox.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("verbose"));
+
+        //SaveButton
+        saveButton = new JellyButton() {
+
+            @Override
+            public void mousePressed(GameContainer container, StateBasedGame game) {
+                //Get gui sets
+                boolean vsync = vsyncBox.isChecked();
+                boolean verbose = verboseBox.isChecked();
+                
+                //Save settings and go to menu
+                SettingsTool.getInstance().setProperty("vsync", vsync);
+                SettingsTool.getInstance().setProperty("verbose", verbose);
+                try {
+                    SettingsTool.getInstance().saveProperties();
+                    SettingsTool.getInstance().reloadProperties(container);
+                } catch (IOException ex) {
+                    Logger.getLogger(SettingsState.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                game.enterState(Game.MENUSTATE);
+            }
+        };
+        saveButton.setIconNormal(new Image("res/gui/save.png"));
+        saveButton.setIconHover(new Image("res/gui/save_wbg.png"));
     }
-    
+
 }

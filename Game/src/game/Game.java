@@ -6,6 +6,7 @@
 
 package game;
 
+import java.io.IOException;
 import states.MenuState;
 import states.PlayState;
 import states.SettingsState;
@@ -13,6 +14,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import settings.SettingsTool;
 
 /**
  *
@@ -30,13 +32,12 @@ public class Game extends StateBasedGame {
         super(name);
     }
     
-    public static void main(String[] args) throws SlickException {
+    public static void main(String[] args) throws SlickException, IOException {
+        
         AppGameContainer app = new AppGameContainer(new Game(TITLE));
-        app.setDisplayMode(800, 600, false);
-        app.setUpdateOnlyWhenVisible(true);
-        app.setShowFPS(false);
-        app.setVerbose(true);
+        SettingsTool.getInstance().initLoadProperties(app);
         app.start();
+        
     }
 
     @Override
