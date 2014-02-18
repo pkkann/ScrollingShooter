@@ -9,9 +9,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
+import settings.SettingsTool;
 
 /**
  *
@@ -22,13 +22,13 @@ public class JellyCheckbox implements JellyComponent {
     private Image uncheckedImg;
     private Image checkedImg;
     private Image icon;
-    private Rectangle bounds;
-    private Rectangle mouse;
+    private final Rectangle bounds;
+    private final Rectangle mouse;
     private boolean checked = false;
     private String label;
 
     public JellyCheckbox() {
-        mouse = new Rectangle(0, 0, 10, 10);
+        mouse = new Rectangle(0, 0, 2, 2);
         bounds = new Rectangle(0, 0, 0, 0);
     }
 
@@ -88,6 +88,7 @@ public class JellyCheckbox implements JellyComponent {
         return checked;
     }
 
+    @Override
     public void draw(Graphics g, float x, float y) {
         bounds.setX(x);
         bounds.setY(y);
@@ -96,6 +97,7 @@ public class JellyCheckbox implements JellyComponent {
         g.drawString(label, x + getWidth() + 10, y);
     }
 
+    @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
         mouse.setX(container.getInput().getMouseX());
         mouse.setY(container.getInput().getMouseY());

@@ -11,6 +11,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
+import settings.SettingsTool;
 
 /**
  *
@@ -22,11 +23,11 @@ public abstract class JellyButton implements JellyComponent {
     private Image iconNormal;
     private Image iconHover;
     private Image icon;
-    private Rectangle bounds;
-    private Rectangle mouse;
+    private final Rectangle bounds;
+    private final Rectangle mouse;
 
     public JellyButton() {
-        mouse = new Rectangle(0, 0, 10, 10);
+        mouse = new Rectangle(0, 0, 2, 2);
         bounds = new Rectangle(x, y, 0, 0);
     }
 
@@ -77,6 +78,7 @@ public abstract class JellyButton implements JellyComponent {
         }
     }
 
+    @Override
     public void draw(Graphics g, float x, float y) {
         this.x = x;
         this.y = y;
@@ -85,6 +87,7 @@ public abstract class JellyButton implements JellyComponent {
         g.drawImage(icon, x, y);
     }
 
+    @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
         
         mouse.setX(container.getInput().getMouseX());

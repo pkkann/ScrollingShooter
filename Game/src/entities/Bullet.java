@@ -6,56 +6,56 @@
 
 package entities;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.state.StateBasedGame;
 
 /**
  *
  * @author Patrick
  */
-public class Bullet {
+public abstract class Bullet extends Sprite {
     
-    private Image img;
-    private float speed;
-    private float angle;
-    private Rectangle bounds;
+    boolean alive = true;
+    float lifeTime;
+    float speed;
     
-    public Bullet(Image img) {
-        setImg(img);
+    public static final int BULLET_NORMAL = 0;
+
+    public Bullet(Image img, float x, float y) {
+        super(img, x, y);
+    }
+    
+    public float getLifeTime() {
+        return lifeTime;
     }
 
-    public void setImg(Image img) {
-        this.img = img;
-        bounds = new Rectangle(0, 0, img.getWidth(), img.getHeight());
-    }
-
-    public void setSpeed(float speed) {
-        this.speed = speed;
-    }
-
-    public void setAngle(float angle) {
-        this.angle = angle;
+    public void setLifeTime(float lifeTime) {
+        this.lifeTime = lifeTime;
     }
 
     public float getSpeed() {
         return speed;
     }
 
-    public float getAngle() {
-        return angle;
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 
-    public Rectangle getBounds() {
-        return bounds;
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
     
-    public void draw(Graphics g, float x, float y) {
-        bounds.setX(x);
-        bounds.setY(y);
-        g.drawImage(img, x, y);
+    @Override
+    public void update(int delta) {
+        super.update(delta);
+        lifeTime += 1 * delta;
+        y -= speed * delta;
+        
+        if(y < -50) {
+            setAlive(false);
+        }
     }
-    
 }

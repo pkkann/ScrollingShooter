@@ -37,7 +37,6 @@ public class Game extends StateBasedGame {
         AppGameContainer app = new AppGameContainer(new Game(TITLE));
         SettingsTool.getInstance().initLoadProperties(app);
         app.start();
-        
     }
 
     @Override

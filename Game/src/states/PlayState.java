@@ -5,7 +5,7 @@
  */
 package states;
 
-import entities.Player;
+import game.BulletManager;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -14,6 +14,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import settings.SettingsTool;
+import game.Game;
 
 /**
  *
@@ -21,9 +23,9 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class PlayState extends BasicGameState {
 
-    private int id;
-    private Player player;
+    private final int id;
     private Image playerTexture;
+    private BulletManager bulletManager;
 
     public PlayState(int id) {
         this.id = id;
@@ -36,12 +38,7 @@ public class PlayState extends BasicGameState {
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        playerTexture = new Image("res/ship.png");
-        player = new Player();
-        player.setTexture(playerTexture);
-        player.setScale(1);
-        player.setX(container.getWidth() / 2);
-        player.setY((container.getHeight() - 20) - player.getTexture().getHeight());
+        bulletManager = new BulletManager();
     }
 
     @Override
@@ -49,19 +46,24 @@ public class PlayState extends BasicGameState {
         //Draw background color
         g.setColor(Color.white);
         g.fillRect(0, 0, container.getWidth(), container.getHeight());
-        
-        player.render(container, game, g);
-        
-        //Draw FPS
-        g.setColor(Color.red);
-        g.drawString(String.valueOf(container.getFPS()), 10, 10);
+
+        bulletManager.renderBullets(g);
+
+        if (SettingsTool.getInstance().getPropertyAsBoolean("verbose")) {
+            g.setColor(Color.red);
+            g.drawString(String.valueOf(container.getFPS()), 10, 10);
+            g.drawString("BulletCount: " + bulletManager.getCurrentBulletCount(), 50, 10);
+        }
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        Input input = container.getInput();
+        bulletManager.updateBullets(delta);
+        bulletManager.removeBullets();
         
-        player.update(container, game, delta);
+        if(container.getInput().isKeyDown(Input.KEY_ESCAPE)) {
+            game.enterState(Game.MENUSTATE);
+        }
     }
 
 }

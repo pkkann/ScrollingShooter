@@ -8,7 +8,6 @@ package settings;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -91,8 +90,6 @@ public class SettingsTool {
             settings.load(input);
             input.close();
             
-            boolean vsync = getPropertyAsBoolean("vsync");
-            boolean showfps = getPropertyAsBoolean("showfps");
             boolean showOnlyWhenVisible = getPropertyAsBoolean("updateOnlyWhenVisible");
             boolean verbose = getPropertyAsBoolean("verbose");
             int width = getPropertyAsInteger("resWidth");
@@ -103,7 +100,6 @@ public class SettingsTool {
             app.setDisplayMode(width, height, fullscreen);
             app.setVerbose(verbose);
             app.setUpdateOnlyWhenVisible(showOnlyWhenVisible);
-            app.setVSync(vsync);
         }
         
         public void reloadProperties(GameContainer container) throws IOException {
@@ -111,15 +107,11 @@ public class SettingsTool {
             settings.load(input);
             input.close();
             
-            boolean vsync = getPropertyAsBoolean("vsync");
-            boolean showfps = getPropertyAsBoolean("showfps");
             boolean showOnlyWhenVisible = getPropertyAsBoolean("updateOnlyWhenVisible");
             boolean verbose = getPropertyAsBoolean("verbose");
             
-            container.setShowFPS(false);
             container.setVerbose(verbose);
             container.setUpdateOnlyWhenVisible(showOnlyWhenVisible);
-            container.setVSync(vsync);
         }
         
         public void closeAll() throws IOException {

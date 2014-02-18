@@ -21,7 +21,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class MenuState extends BasicGameState {
 
-    private int id;
+    private final int id;
     private JellyButton playButton;
     private JellyButton quitButton;
     private JellyButton settingsButton;

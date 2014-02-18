@@ -27,11 +27,11 @@ import settings.SettingsTool;
  */
 public class SettingsState extends BasicGameState {
 
-    private int id;
+    private final int id;
     private JellyButton backButton;
     private JellyButton saveButton;
-    private JellyCheckbox vsyncBox;
     private JellyCheckbox verboseBox;
+    private JellyCheckbox updateOnlyWhenVisible;
 
     public SettingsState(int id) {
         this.id = id;
@@ -50,16 +50,19 @@ public class SettingsState extends BasicGameState {
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         FontManager.titleFont.drawString(150, 100, "SETTINGS", Color.white);
-        vsyncBox.draw(g, 400, 200);
-        verboseBox.draw(g, 400, 250);
+        
+        verboseBox.draw(g, 400, 200);
+        updateOnlyWhenVisible.draw(g, 400, 250);
+        
         backButton.draw(g, 700, 550);
         saveButton.draw(g, 600, 550);
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        vsyncBox.update(container, game, delta);
         verboseBox.update(container, game, delta);
+        updateOnlyWhenVisible.update(container, game, delta);
+        
         backButton.update(container, game, delta);
         saveButton.update(container, game, delta);
     }
@@ -76,19 +79,19 @@ public class SettingsState extends BasicGameState {
         backButton.setIconNormal(new Image("res/gui/back.png"));
         backButton.setIconHover(new Image("res/gui/back_wbg.png"));
         
-        //VSyncBox
-        vsyncBox = new JellyCheckbox();
-        vsyncBox.setLabel("VSYNC");
-        vsyncBox.setCheckedImage(new Image("res/gui/checkbox_checked.png"));
-        vsyncBox.setUncheckedImage(new Image("res/gui/checkbox_unchecked.png"));
-        vsyncBox.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("vsync"));
-        
         //VerboseBOx
         verboseBox = new JellyCheckbox();
         verboseBox.setLabel("VERBOSE");
         verboseBox.setCheckedImage(new Image("res/gui/checkbox_checked.png"));
         verboseBox.setUncheckedImage(new Image("res/gui/checkbox_unchecked.png"));
         verboseBox.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("verbose"));
+        
+        //UpdateOnlyWhenVisible
+        updateOnlyWhenVisible = new JellyCheckbox();
+        updateOnlyWhenVisible.setLabel("Update only when visible");
+        updateOnlyWhenVisible.setCheckedImage(new Image("res/gui/checkbox_checked.png"));
+        updateOnlyWhenVisible.setUncheckedImage(new Image("res/gui/checkbox_unchecked.png"));
+        updateOnlyWhenVisible.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("updateOnlyWhenVisible"));
 
         //SaveButton
         saveButton = new JellyButton() {
@@ -96,12 +99,13 @@ public class SettingsState extends BasicGameState {
             @Override
             public void mousePressed(GameContainer container, StateBasedGame game) {
                 //Get gui sets
-                boolean vsync = vsyncBox.isChecked();
                 boolean verbose = verboseBox.isChecked();
+                boolean uowv = updateOnlyWhenVisible.isChecked();
                 
                 //Save settings and go to menu
-                SettingsTool.getInstance().setProperty("vsync", vsync);
                 SettingsTool.getInstance().setProperty("verbose", verbose);
+                SettingsTool.getInstance().setProperty("updateOnlyWhenVisible", uowv);
+                
                 try {
                     SettingsTool.getInstance().saveProperties();
                     SettingsTool.getInstance().reloadProperties(container);
