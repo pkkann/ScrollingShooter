@@ -4,11 +4,10 @@
  * and open the template in the editor.
  */
 
-package entities;
+package entities.bullet;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 
 /**
  *
@@ -16,9 +15,15 @@ import org.newdawn.slick.Image;
  */
 public class NormalBullet extends Bullet {
 
-    public NormalBullet(Image img, float x, float y) {
-        super(img, x, y);
-        speed = 0.5f;
+    public NormalBullet(float x, float y) {
+        super(x, y);
+        super.setSpeed(0.5f);
+    }
+    
+    @Override
+    public void render(Graphics g) {
+        g.setColor(Color.yellow);
+        g.fillRect(super.getX(), super.getY(), 10, 10);
     }
     
 }

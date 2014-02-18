@@ -5,6 +5,7 @@
  */
 package states;
 
+import entities.bullet.Bullet;
 import game.BulletManager;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -63,6 +64,10 @@ public class PlayState extends BasicGameState {
         
         if(container.getInput().isKeyDown(Input.KEY_ESCAPE)) {
             game.enterState(Game.MENUSTATE);
+        }
+        
+        if(container.getInput().isKeyDown(Input.KEY_SPACE)) {
+            bulletManager.spawnBullet(Bullet.BULLET_NORMAL, 400, 550);
         }
     }
 

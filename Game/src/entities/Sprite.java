@@ -6,7 +6,6 @@
 
 package entities;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
@@ -21,10 +20,16 @@ public abstract class Sprite implements Entity {
     Rectangle bounds;
     Image img;
     
-    public Sprite(Image img, float x, float y) {
-        this.img = img;
+    public Sprite(float x, float y) {
         this.x = x;
         this.y = y;
+        bounds = new Rectangle(x, y, 0,0);
+    }
+    
+    public Sprite(Image img, float x, float y) {
+        this.x = x;
+        this.y = y;
+        this.img = img;
         bounds = new Rectangle(x, y, img.getWidth(), img.getHeight());
     }
 
@@ -43,6 +48,24 @@ public abstract class Sprite implements Entity {
     public void setY(float y) {
         this.y = y;
     }
+    
+    public float getWidth() {
+        return bounds.getWidth();
+    }
+    
+    public void setWidth(int width) {
+        img = img.getScaledCopy(width, (int)getHeight());
+        bounds.setWidth(width);
+    }
+    
+    public float getHeight() {
+        return bounds.getHeight();
+    }
+    
+    public void setHeight(int height) {
+        img = img.getScaledCopy((int)getWidth(), height);
+        bounds.setHeight(height);
+    }
 
     public Rectangle getBounds() {
         return bounds;
@@ -58,6 +81,8 @@ public abstract class Sprite implements Entity {
 
     public void setImg(Image img) {
         this.img = img;
+        bounds.setWidth(img.getWidth());
+        bounds.setHeight(img.getHeight());
     }
 
     @Override

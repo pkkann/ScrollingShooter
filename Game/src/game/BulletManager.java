@@ -5,8 +5,8 @@
  */
 package game;
 
-import entities.Bullet;
-import entities.NormalBullet;
+import entities.bullet.Bullet;
+import entities.bullet.NormalBullet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.newdawn.slick.Graphics;
@@ -29,13 +29,13 @@ public class BulletManager {
         return bullets.size();
     }
 
-    public Bullet spawnBullet(int type, Image img, float x, float y) {
+    public Bullet spawnBullet(int type, float x, float y) {
         Bullet b = null;
         if (counter <= 0) {
             
             switch (type) {
                 case Bullet.BULLET_NORMAL:
-                    b = new NormalBullet(img, x, y);
+                    b = new NormalBullet(x, y);
                     bullets.add(b);
                     break;
             }

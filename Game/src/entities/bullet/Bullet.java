@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package entities;
+package entities.bullet;
 
-import org.newdawn.slick.Image;
+import entities.Sprite;
 
 /**
  *
@@ -14,14 +14,14 @@ import org.newdawn.slick.Image;
  */
 public abstract class Bullet extends Sprite {
     
-    boolean alive = true;
-    float lifeTime;
-    float speed;
+    private boolean alive = true;
+    private float lifeTime;
+    private float speed;
     
     public static final int BULLET_NORMAL = 0;
 
-    public Bullet(Image img, float x, float y) {
-        super(img, x, y);
+    public Bullet(float x, float y) {
+        super(x, y);
     }
     
     public float getLifeTime() {
@@ -52,9 +52,9 @@ public abstract class Bullet extends Sprite {
     public void update(int delta) {
         super.update(delta);
         lifeTime += 1 * delta;
-        y -= speed * delta;
+        super.setY(super.getY() - speed * delta);
         
-        if(y < -50) {
+        if(super.getY() < -50) {
             setAlive(false);
         }
     }
