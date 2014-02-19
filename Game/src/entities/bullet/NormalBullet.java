@@ -7,7 +7,9 @@
 package entities.bullet;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  *
@@ -21,8 +23,8 @@ public class NormalBullet extends Bullet {
     }
     
     @Override
-    public void render(Graphics g) {
-        g.setColor(Color.yellow);
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        g.setColor(Color.red);
         g.fillRect(super.getX(), super.getY(), 10, 10);
     }
     

@@ -7,6 +7,8 @@
 package entities.bullet;
 
 import entities.Sprite;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  *
@@ -49,8 +51,8 @@ public abstract class Bullet extends Sprite {
     }
     
     @Override
-    public void update(int delta) {
-        super.update(delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
         lifeTime += 1 * delta;
         super.setY(super.getY() - speed * delta);
         

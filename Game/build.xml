@@ -70,4 +70,17 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <target name="-post-jar"> 
+        <copy file="settings.properties" flatten="true" todir="${dist.dir}"/>
+        <copy todir="${dist.dir}/res">
+            <fileset dir="res/">
+                <include name="**/**"/>
+            </fileset>
+        </copy>  
+        <copy todir="${dist.dir}">
+            <fileset dir="natives/">
+                <include name="**/**"/>
+            </fileset>
+        </copy>  
+    </target> 
 </project>

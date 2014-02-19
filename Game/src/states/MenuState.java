@@ -42,9 +42,9 @@ public class MenuState extends BasicGameState {
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-        playButton.draw(g, 300, 200);
-        settingsButton.draw(g, 300, 250);
-        quitButton.draw(g, 300, 300);
+        playButton.draw(g, (container.getWidth() / 2) - (playButton.getWidth() / 2), 200);
+        settingsButton.draw(g, (container.getWidth() / 2) - (settingsButton.getWidth() / 2), 250);
+        quitButton.draw(g, (container.getWidth() / 2) - (quitButton.getWidth() / 2), 300);
     }
 
     @Override

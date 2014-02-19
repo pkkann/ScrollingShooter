@@ -6,6 +6,7 @@
 package states;
 
 import entities.bullet.Bullet;
+import entities.player.Player;
 import game.BulletManager;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -26,7 +27,8 @@ public class PlayState extends BasicGameState {
 
     private final int id;
     private Image playerTexture;
-    private BulletManager bulletManager;
+    private BulletManager bManager;
+    private Player player;
 
     public PlayState(int id) {
         this.id = id;
@@ -39,7 +41,8 @@ public class PlayState extends BasicGameState {
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        bulletManager = new BulletManager();
+        bManager = new BulletManager();
+        player = new Player(container.getWidth() / 2, container.getHeight() - 80, bManager);
     }
 
     @Override
@@ -48,26 +51,24 @@ public class PlayState extends BasicGameState {
         g.setColor(Color.white);
         g.fillRect(0, 0, container.getWidth(), container.getHeight());
 
-        bulletManager.renderBullets(g);
+        bManager.renderBullets(container, game, g);
+        player.render(container, game, g);
 
         if (SettingsTool.getInstance().getPropertyAsBoolean("verbose")) {
             g.setColor(Color.red);
             g.drawString(String.valueOf(container.getFPS()), 10, 10);
-            g.drawString("BulletCount: " + bulletManager.getCurrentBulletCount(), 50, 10);
+            g.drawString("BulletCount: " + bManager.getCurrentBulletCount(), 50, 10);
         }
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        bulletManager.updateBullets(delta);
-        bulletManager.removeBullets();
+        bManager.updateBullets(container, game, delta);
+        bManager.removeBullets();
+        player.update(container, game, delta);
         
         if(container.getInput().isKeyDown(Input.KEY_ESCAPE)) {
             game.enterState(Game.MENUSTATE);
-        }
-        
-        if(container.getInput().isKeyDown(Input.KEY_SPACE)) {
-            bulletManager.spawnBullet(Bullet.BULLET_NORMAL, 400, 550);
         }
     }
 

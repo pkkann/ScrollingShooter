@@ -6,9 +6,11 @@
 
 package entities;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  *
@@ -39,6 +41,7 @@ public abstract class Sprite implements Entity {
 
     public void setX(float x) {
         this.x = x;
+        bounds.setX(x);
     }
 
     public float getY() {
@@ -47,6 +50,7 @@ public abstract class Sprite implements Entity {
 
     public void setY(float y) {
         this.y = y;
+        bounds.setY(y);
     }
     
     public float getWidth() {
@@ -54,7 +58,6 @@ public abstract class Sprite implements Entity {
     }
     
     public void setWidth(int width) {
-        img = img.getScaledCopy(width, (int)getHeight());
         bounds.setWidth(width);
     }
     
@@ -63,7 +66,6 @@ public abstract class Sprite implements Entity {
     }
     
     public void setHeight(int height) {
-        img = img.getScaledCopy((int)getWidth(), height);
         bounds.setHeight(height);
     }
 
@@ -84,14 +86,30 @@ public abstract class Sprite implements Entity {
         bounds.setWidth(img.getWidth());
         bounds.setHeight(img.getHeight());
     }
+    
+    public float getImageWidth() {
+        return img.getWidth();
+    }
+    
+    public void setImageWidth(int width) {
+        img = img.getScaledCopy(width, img.getHeight());
+    }
+    
+    public float getImageHeight() {
+        return img.getHeight();
+    }
+    
+    public void setImageHeight(int height) {
+        img = img.getScaledCopy(img.getWidth(), height);
+    }
 
     @Override
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         g.drawImage(img, x, y);
     }
 
     @Override
-    public void update(int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         bounds.setX(x);
         bounds.setY(y);
     }

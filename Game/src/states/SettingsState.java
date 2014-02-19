@@ -31,7 +31,8 @@ public class SettingsState extends BasicGameState {
     private JellyButton backButton;
     private JellyButton saveButton;
     private JellyCheckbox verboseBox;
-    private JellyCheckbox updateOnlyWhenVisible;
+    private JellyCheckbox updateOnlyWhenVisibleBox;
+    private JellyCheckbox fullscreenBox;
 
     public SettingsState(int id) {
         this.id = id;
@@ -52,7 +53,8 @@ public class SettingsState extends BasicGameState {
         FontManager.titleFont.drawString(150, 100, "SETTINGS", Color.white);
         
         verboseBox.draw(g, 400, 200);
-        updateOnlyWhenVisible.draw(g, 400, 250);
+        updateOnlyWhenVisibleBox.draw(g, 400, 250);
+        fullscreenBox.draw(g, 400, 300);
         
         backButton.draw(g, 700, 550);
         saveButton.draw(g, 600, 550);
@@ -61,7 +63,8 @@ public class SettingsState extends BasicGameState {
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         verboseBox.update(container, game, delta);
-        updateOnlyWhenVisible.update(container, game, delta);
+        updateOnlyWhenVisibleBox.update(container, game, delta);
+        fullscreenBox.update(container, game, delta);
         
         backButton.update(container, game, delta);
         saveButton.update(container, game, delta);
@@ -87,11 +90,18 @@ public class SettingsState extends BasicGameState {
         verboseBox.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("verbose"));
         
         //UpdateOnlyWhenVisible
-        updateOnlyWhenVisible = new JellyCheckbox();
-        updateOnlyWhenVisible.setLabel("Update only when visible");
-        updateOnlyWhenVisible.setCheckedImage(new Image("res/gui/checkbox_checked.png"));
-        updateOnlyWhenVisible.setUncheckedImage(new Image("res/gui/checkbox_unchecked.png"));
-        updateOnlyWhenVisible.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("updateOnlyWhenVisible"));
+        updateOnlyWhenVisibleBox = new JellyCheckbox();
+        updateOnlyWhenVisibleBox.setLabel("Update only when visible");
+        updateOnlyWhenVisibleBox.setCheckedImage(new Image("res/gui/checkbox_checked.png"));
+        updateOnlyWhenVisibleBox.setUncheckedImage(new Image("res/gui/checkbox_unchecked.png"));
+        updateOnlyWhenVisibleBox.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("updateOnlyWhenVisible"));
+        
+        //Fullscreen
+        fullscreenBox = new JellyCheckbox();
+        fullscreenBox.setLabel("Fullscreen");
+        fullscreenBox.setCheckedImage(new Image("res/gui/checkbox_checked.png"));
+        fullscreenBox.setUncheckedImage(new Image("res/gui/checkbox_unchecked.png"));
+        fullscreenBox.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("fullscreen"));
 
         //SaveButton
         saveButton = new JellyButton() {
@@ -100,16 +110,18 @@ public class SettingsState extends BasicGameState {
             public void mousePressed(GameContainer container, StateBasedGame game) {
                 //Get gui sets
                 boolean verbose = verboseBox.isChecked();
-                boolean uowv = updateOnlyWhenVisible.isChecked();
+                boolean uowv = updateOnlyWhenVisibleBox.isChecked();
+                boolean fullscreen = fullscreenBox.isChecked();
                 
                 //Save settings and go to menu
                 SettingsTool.getInstance().setProperty("verbose", verbose);
                 SettingsTool.getInstance().setProperty("updateOnlyWhenVisible", uowv);
+                SettingsTool.getInstance().setProperty("fullscreen", fullscreen);
                 
                 try {
                     SettingsTool.getInstance().saveProperties();
                     SettingsTool.getInstance().reloadProperties(container);
-                } catch (IOException ex) {
+                } catch (IOException | SlickException ex) {
                     Logger.getLogger(SettingsState.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 game.enterState(Game.MENUSTATE);

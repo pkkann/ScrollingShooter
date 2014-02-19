@@ -9,8 +9,9 @@ import entities.bullet.Bullet;
 import entities.bullet.NormalBullet;
 import java.util.ArrayList;
 import java.util.Iterator;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  *
@@ -55,20 +56,20 @@ public class BulletManager {
         }
     }
 
-    public void renderBullets(Graphics g) {
+    public void renderBullets(GameContainer container, StateBasedGame game, Graphics g) {
         Iterator<Bullet> i = bullets.iterator();
 
         while (i.hasNext()) {
-            i.next().render(g);
+            i.next().render(container, game, g);
         }
     }
 
-    public void updateBullets(int delta) {
+    public void updateBullets(GameContainer container, StateBasedGame game, int delta) {
         counter -= 1 * delta;
         Iterator<Bullet> i = bullets.iterator();
 
         while (i.hasNext()) {
-            i.next().update(delta);
+            i.next().update(container, game, delta);
         }
     }
 
