@@ -18,5 +18,7 @@ public interface Entity {
     
     public void render(GameContainer container, StateBasedGame game, Graphics g);
     public void update(GameContainer container, StateBasedGame game, int delta);
+    public void verboseRender(GameContainer container, StateBasedGame game, Graphics g);
+    public void verboseUpdate(GameContainer container, StateBasedGame game, int delta);
     
 }

@@ -7,6 +7,7 @@ package game;
 
 import entities.bullet.Bullet;
 import entities.bullet.NormalBullet;
+import entities.test.TestBox;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.newdawn.slick.GameContainer;
@@ -18,11 +19,14 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Patrick
  */
 public class BulletManager {
+    
+    private TestBoxManager tbManager;
 
     private ArrayList<Bullet> bullets;
     private float counter = 150;
 
-    public BulletManager() {
+    public BulletManager(TestBoxManager tbManager) {
+        this.tbManager = tbManager;
         bullets = new ArrayList<>();
     }
 
@@ -60,7 +64,9 @@ public class BulletManager {
         Iterator<Bullet> i = bullets.iterator();
 
         while (i.hasNext()) {
-            i.next().render(container, game, g);
+            Bullet b = i.next();
+            b.render(container, game, g);
+            b.verboseRender(container, game, g);
         }
     }
 
@@ -69,7 +75,27 @@ public class BulletManager {
         Iterator<Bullet> i = bullets.iterator();
 
         while (i.hasNext()) {
-            i.next().update(container, game, delta);
+            Bullet b = i.next();
+            b.update(container, game, delta);
+            b.verboseUpdate(container, game, delta);
+        }
+    }
+    
+    public void checkCollisions() {
+        
+        Iterator<Bullet> i = bullets.iterator();
+        
+        while(i.hasNext()) {
+            Bullet b = i.next();
+            Iterator<TestBox> it = tbManager.getTestBoxes().iterator();
+            
+            while(it.hasNext()) {
+                TestBox tb = it.next();
+                
+                if(b.getBounds().intersects(tb.getBounds())) {
+                    b.collision(tb);
+                }
+            }
         }
     }
 

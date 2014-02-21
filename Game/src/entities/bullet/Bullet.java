@@ -16,22 +16,12 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public abstract class Bullet extends Sprite {
     
-    private boolean alive = true;
-    private float lifeTime;
     private float speed;
     
     public static final int BULLET_NORMAL = 0;
 
     public Bullet(float x, float y) {
         super(x, y);
-    }
-    
-    public float getLifeTime() {
-        return lifeTime;
-    }
-
-    public void setLifeTime(float lifeTime) {
-        this.lifeTime = lifeTime;
     }
 
     public float getSpeed() {
@@ -41,19 +31,15 @@ public abstract class Bullet extends Sprite {
     public void setSpeed(float speed) {
         this.speed = speed;
     }
-
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public void setAlive(boolean alive) {
-        this.alive = alive;
+    
+    public void collision(Sprite s) {
+        s.setLife(s.getLife() - super.getDamage());
+        super.setAlive(false);
     }
     
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
         super.update(container, game, delta);
-        lifeTime += 1 * delta;
         super.setY(super.getY() - speed * delta);
         
         if(super.getY() < -50) {

@@ -6,11 +6,13 @@
 
 package entities;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
+import settings.SettingsTool;
 
 /**
  *
@@ -18,38 +20,46 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public abstract class Sprite implements Entity {
     
-    float x, y;
     Rectangle bounds;
     Image img;
+    int life;
+    int damage;
+    boolean alive = true;
     
     public Sprite(float x, float y) {
-        this.x = x;
-        this.y = y;
         bounds = new Rectangle(x, y, 0,0);
+        setX(x);
+        setY(y);
     }
     
     public Sprite(Image img, float x, float y) {
-        this.x = x;
-        this.y = y;
-        this.img = img;
         bounds = new Rectangle(x, y, img.getWidth(), img.getHeight());
+        this.img = img;
+        setX(x);
+        setY(y);
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 
     public float getX() {
-        return x;
+        return bounds.getX();
     }
 
-    public void setX(float x) {
-        this.x = x;
+    public final void setX(float x) {
         bounds.setX(x);
     }
 
     public float getY() {
-        return y;
+        return bounds.getY();
     }
 
-    public void setY(float y) {
-        this.y = y;
+    public final void setY(float y) {
         bounds.setY(y);
     }
     
@@ -103,15 +113,46 @@ public abstract class Sprite implements Entity {
         img = img.getScaledCopy(img.getWidth(), height);
     }
 
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        g.drawImage(img, x, y);
+        g.drawImage(img, getX(), getY());
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
-        bounds.setX(x);
-        bounds.setY(y);
+        bounds.setX(getX());
+        bounds.setY(getY());
+    }
+    
+    @Override
+    public void verboseRender(GameContainer container, StateBasedGame game, Graphics g) {
+        if(SettingsTool.getInstance().getPropertyAsBoolean("verbose")) {
+            g.setColor(Color.red);
+            g.draw(bounds);
+        }
+    }
+    
+    @Override
+    public void verboseUpdate(GameContainer container, StateBasedGame game, int delta) {
+        if(SettingsTool.getInstance().getPropertyAsBoolean("verbose")) {
+            
+        }
     }
     
 }

@@ -25,13 +25,13 @@ public class Player extends Sprite {
     private BulletManager bManager;
     private int width = 50;
     private int height = 50;
-    private int life = 100;
 
     public Player(float x, float y, BulletManager bManager) {
         super(x, y);
         this.bManager = bManager;
         super.setWidth(width);
         super.setHeight(height);
+        super.setLife(100);
     }
 
     public float getSpeed() {
@@ -40,14 +40,6 @@ public class Player extends Sprite {
 
     public void setSpeed(float speed) {
         this.speed = speed;
-    }
-
-    public int getLife() {
-        return life;
-    }
-
-    public void setLife(int life) {
-        this.life = life;
     }
     
     @Override
