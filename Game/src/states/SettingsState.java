@@ -50,6 +50,7 @@ public class SettingsState extends BasicGameState {
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+        g.setColor(Color.white);
         FontManager.titleFont.drawString(150, 100, "SETTINGS", Color.white);
         
         verboseBox.draw(g, 400, 200);

@@ -18,6 +18,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import settings.SettingsTool;
 import game.Game;
+import world.World;
 
 /**
  *
@@ -26,9 +27,7 @@ import game.Game;
 public class PlayState extends BasicGameState {
 
     private final int id;
-    private Image playerTexture;
-    private BulletManager bManager;
-    private Player player;
+    private World world;
 
     public PlayState(int id) {
         this.id = id;
@@ -41,8 +40,8 @@ public class PlayState extends BasicGameState {
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        bManager = new BulletManager();
-        player = new Player(container.getWidth() / 2, container.getHeight() - 80, bManager);
+        world = new World();
+        world.init(container, game);
     }
 
     @Override
@@ -51,21 +50,18 @@ public class PlayState extends BasicGameState {
         g.setColor(Color.white);
         g.fillRect(0, 0, container.getWidth(), container.getHeight());
 
-        bManager.renderBullets(container, game, g);
-        player.render(container, game, g);
-
+        world.render(container, game, g);
+        
         if (SettingsTool.getInstance().getPropertyAsBoolean("verbose")) {
             g.setColor(Color.red);
             g.drawString(String.valueOf(container.getFPS()), 10, 10);
-            g.drawString("BulletCount: " + bManager.getCurrentBulletCount(), 50, 10);
         }
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        bManager.updateBullets(container, game, delta);
-        bManager.removeBullets();
-        player.update(container, game, delta);
+        
+        world.update(container, game, delta);
         
         if(container.getInput().isKeyDown(Input.KEY_ESCAPE)) {
             game.enterState(Game.MENUSTATE);

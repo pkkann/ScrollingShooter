@@ -16,10 +16,20 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Patrick
  */
 public class NormalBullet extends Bullet {
+    
+    private int damage = 100;
 
     public NormalBullet(float x, float y) {
         super(x, y);
         super.setSpeed(0.5f);
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
     
     @Override

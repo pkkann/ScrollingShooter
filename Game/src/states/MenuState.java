@@ -8,6 +8,7 @@ package states;
 
 import game.Game;
 import jellygui.*;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -42,6 +43,7 @@ public class MenuState extends BasicGameState {
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+        g.setColor(Color.white);
         playButton.draw(g, (container.getWidth() / 2) - (playButton.getWidth() / 2), 200);
         settingsButton.draw(g, (container.getWidth() / 2) - (settingsButton.getWidth() / 2), 250);
         quitButton.draw(g, (container.getWidth() / 2) - (quitButton.getWidth() / 2), 300);
