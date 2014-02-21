@@ -23,7 +23,7 @@ public class NormalBullet extends Bullet {
     public NormalBullet(float x, float y) {
         super(x, y);
         super.setSpeed(0.5f);
-        super.setDamage(13);
+        super.setDamage(100);
         super.setLife(100);
         super.setWidth(width);
         super.setHeight(height);
