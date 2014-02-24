@@ -28,7 +28,7 @@ public class TestBox extends Sprite {
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
         g.setColor(Color.cyan);
-        g.fillRect(super.getX(), super.getY(), 50, 50);;
+        g.fillRect(super.getX(), super.getY(), 50, 50);
     }
     
 }
