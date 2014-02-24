@@ -7,26 +7,23 @@ package game;
 
 import entities.bullet.Bullet;
 import entities.bullet.NormalBullet;
-import entities.test.TestBox;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.tests.TestBox;
 
 /**
  *
  * @author Patrick
  */
 public class BulletManager {
-    
-    private TestBoxManager tbManager;
 
     private ArrayList<Bullet> bullets;
     private float counter = 150;
 
-    public BulletManager(TestBoxManager tbManager) {
-        this.tbManager = tbManager;
+    public BulletManager() {
         bullets = new ArrayList<>();
     }
 
@@ -83,20 +80,6 @@ public class BulletManager {
     
     public void checkCollisions() {
         
-        Iterator<Bullet> i = bullets.iterator();
-        
-        while(i.hasNext()) {
-            Bullet b = i.next();
-            Iterator<TestBox> it = tbManager.getTestBoxes().iterator();
-            
-            while(it.hasNext()) {
-                TestBox tb = it.next();
-                
-                if(b.getBounds().intersects(tb.getBounds())) {
-                    b.collision(tb);
-                }
-            }
-        }
     }
 
 }
