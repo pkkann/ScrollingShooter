@@ -5,10 +5,9 @@
  */
 package world.map;
 
-import game.TileManager;
+import control.TileManager;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -22,11 +21,10 @@ public class Tiler {
 
     private TileManager tileManager;
     
-    private List<int[]> map;
+    private LinkedList<int[]> map;
     private boolean repeat = true;
     private float scrollSpeed = 0.1f;
     private float scroll = 0;
-    private int[] i;
 
     public Tiler(TileManager tileManager) {
         map = new LinkedList<>();
@@ -59,29 +57,23 @@ public class Tiler {
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-        
+        for(int y = 0; y < map.size(); y++) {
+            for (int x = 0; x < map.get(y).length; x++) {
+                tileManager.getTile(map.get(y)[x]).draw(x * tileManager.getTileSize(), y * tileManager.getTileSize() - 32 + scroll);
+            }
+        }
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) {
-//        scroll += scrollSpeed * delta;
-//        if (repeat) {
-//            if (scroll >= 32) {
-//                for (int y = map.length - 1; y > -1; y--) {
-//
-//                    if (y == map.length - 1) {
-//                        i = map[0];
-//                        map[0] = map[y];
-//                    } else {
-//                        if (y == 0) {
-//                            map[y + 1] = i;
-//                        } else {
-//                            map[y + 1] = map[y];
-//                        }
-//                    }
-//                }
-//                scroll = 0;
-//            }
-//        }
+        scroll += scrollSpeed * delta;
+        
+        if(repeat) {
+            if(scroll >= tileManager.getTileSize()) {
+                int[] i = map.pollLast();
+                map.addFirst(i);
+                scroll = 0;
+            }
+        }
     }
 
 }

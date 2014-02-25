@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package game;
+package control;
 
 import entities.enemy.Enemy;
 import java.util.ArrayList;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package game;
+package control;
 
 import entities.bullet.Bullet;
 import entities.bullet.NormalBullet;
@@ -21,7 +21,8 @@ import org.newdawn.slick.tests.TestBox;
 public class BulletManager {
 
     private ArrayList<Bullet> bullets;
-    private float counter = 150;
+    private final float topCount = 150;
+    private float counter = topCount;
 
     public BulletManager() {
         bullets = new ArrayList<>();
@@ -42,7 +43,7 @@ public class BulletManager {
                     break;
             }
             
-            counter = 150;
+            counter = topCount;
         }
         return b;
     }

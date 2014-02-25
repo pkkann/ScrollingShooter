@@ -7,7 +7,7 @@ package states;
 
 import entities.bullet.Bullet;
 import entities.player.Player;
-import game.BulletManager;
+import control.BulletManager;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -18,7 +18,6 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import settings.SettingsTool;
 import game.Game;
-import world.TileMap;
 import world.World;
 
 /**

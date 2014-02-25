@@ -5,7 +5,7 @@
  */
 package states;
 
-import game.FontManager;
+import control.FontManager;
 import game.Game;
 import java.io.IOException;
 import java.util.logging.Level;

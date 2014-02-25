@@ -8,7 +8,7 @@ package entities.player;
 
 import entities.Sprite;
 import entities.bullet.Bullet;
-import game.BulletManager;
+import control.BulletManager;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
