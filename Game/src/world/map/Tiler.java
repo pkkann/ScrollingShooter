@@ -31,8 +31,6 @@ public class Tiler {
     public Tiler(TileManager tileManager) {
         map = new LinkedList<>();
         
-        
-        
         this.tileManager = tileManager;
     }
 

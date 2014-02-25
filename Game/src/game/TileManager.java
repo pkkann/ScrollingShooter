@@ -18,9 +18,14 @@ public class TileManager {
 
     public static final int water = 1;
     private Image waterImg;
+    private int tileSize = 32;
     
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         waterImg = new Image("res/tiles/water.png");
+    }
+    
+    public int getTileSize() {
+        return tileSize;
     }
 
     public Image getTile(int type) {
