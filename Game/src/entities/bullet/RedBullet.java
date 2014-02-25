@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 
-package entities.test;
+package entities.bullet;
 
-import entities.Sprite;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -14,21 +13,24 @@ import org.newdawn.slick.state.StateBasedGame;
 
 /**
  *
- * @author patrick
+ * @author Patrick
  */
-public class TestBox extends Sprite {
+public class RedBullet extends Bullet {
+    
 
-    public TestBox(float x, float y) {
+    public RedBullet(float x, float y) {
         super(x, y);
-        super.setWidth(50);
-        super.setHeight(50);
+        super.setSpeed(0.5f);
+        super.setDamage(100);
         super.setLife(100);
+        super.setWidth(10);
+        super.setHeight(10);
     }
     
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        g.setColor(Color.cyan);
-        g.fillRect(super.getX(), super.getY(), 50, 50);
+        g.setColor(Color.red);
+        g.fillRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
     }
     
 }

@@ -6,7 +6,8 @@
 package control;
 
 import entities.bullet.Bullet;
-import entities.bullet.NormalBullet;
+import entities.bullet.GreenBullet;
+import entities.bullet.RedBullet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.newdawn.slick.GameContainer;
@@ -37,8 +38,12 @@ public class BulletManager {
         if (counter <= 0) {
             
             switch (type) {
-                case Bullet.BULLET_NORMAL:
-                    b = new NormalBullet(x, y);
+                case Bullet.BULLET_RED:
+                    b = new RedBullet(x, y);
+                    bullets.add(b);
+                    break;
+                case Bullet.BULLET_GREEN:
+                    b = new GreenBullet(x,y);
                     bullets.add(b);
                     break;
             }

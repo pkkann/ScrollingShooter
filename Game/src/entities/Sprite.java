@@ -128,6 +128,8 @@ public abstract class Sprite implements Entity {
     public void setDamage(int damage) {
         this.damage = damage;
     }
+    
+    public abstract void collision(Sprite s);
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {

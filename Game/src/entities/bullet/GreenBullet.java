@@ -15,24 +15,22 @@ import org.newdawn.slick.state.StateBasedGame;
  *
  * @author Patrick
  */
-public class NormalBullet extends Bullet {
+public class GreenBullet extends Bullet {
     
-    private int width = 10;
-    private int height = 10;
 
-    public NormalBullet(float x, float y) {
+    public GreenBullet(float x, float y) {
         super(x, y);
         super.setSpeed(0.5f);
         super.setDamage(100);
         super.setLife(100);
-        super.setWidth(width);
-        super.setHeight(height);
+        super.setWidth(10);
+        super.setHeight(10);
     }
     
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        g.setColor(Color.red);
-        g.fillRect(super.getX(), super.getY(), width, height);
+        g.setColor(Color.green);
+        g.fillRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
     }
     
 }

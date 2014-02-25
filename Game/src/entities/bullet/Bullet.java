@@ -18,7 +18,8 @@ public abstract class Bullet extends Sprite {
     
     private float speed;
     
-    public static final int BULLET_NORMAL = 0;
+    public static final int BULLET_RED = 0;
+    public static final int BULLET_GREEN = 1;
 
     public Bullet(float x, float y) {
         super(x, y);
@@ -32,6 +33,7 @@ public abstract class Bullet extends Sprite {
         this.speed = speed;
     }
     
+    @Override
     public void collision(Sprite s) {
         s.setLife(s.getLife() - super.getDamage());
         super.setAlive(false);
