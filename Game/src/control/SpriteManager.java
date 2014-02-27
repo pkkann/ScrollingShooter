@@ -16,7 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
  *
  * @author patrick
  */
-public interface Manager {
+public interface SpriteManager {
     
     public Sprite spawnObject(int type, float x, float y);
     

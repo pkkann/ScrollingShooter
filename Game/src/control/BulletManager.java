@@ -20,7 +20,7 @@ import org.newdawn.slick.state.StateBasedGame;
  *
  * @author Patrick
  */
-public class BulletManager implements Manager {
+public class BulletManager implements SpriteManager {
 
     private ArrayList<Bullet> bullets;
     private final float topCount = 150;

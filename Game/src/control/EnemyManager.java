@@ -22,7 +22,7 @@ import org.newdawn.slick.state.StateBasedGame;
  *
  * @author patrick
  */
-public class EnemyManager implements Manager {
+public class EnemyManager implements SpriteManager {
 
     private ArrayList<Enemy> enemies;
 

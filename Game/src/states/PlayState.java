@@ -16,7 +16,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import settings.SettingsTool;
+import tools.SettingsTool;
 import game.Game;
 import world.World;
 

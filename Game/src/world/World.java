@@ -7,6 +7,7 @@ package world;
 
 import entities.player.Player;
 import control.BulletManager;
+import control.EnemyManager;
 import control.TileHandler;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -25,6 +26,7 @@ public class World {
     private MapRenderer mapRenderer;
     private TileHandler tileManager;
     private BulletManager bulletManager;
+    private EnemyManager enemyManager;
     private Player player;
     private WorldGUI worldGUI;
     private int[][] startMap = {
@@ -58,6 +60,7 @@ public class World {
         tileManager = new TileHandler();
         bulletManager = new BulletManager();
         mapRenderer = new MapRenderer(tileManager);
+        enemyManager = new EnemyManager();
         player = new Player(0, 0, bulletManager);
         worldGUI = new WorldGUI(player);
     }
@@ -78,6 +81,7 @@ public class World {
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         mapRenderer.render(container, game, g);
         bulletManager.renderObjects(container, game, g);
+        enemyManager.renderObjects(container, game, g);
         player.render(container, game, g);
         worldGUI.render(container, game, g);
         
@@ -86,6 +90,7 @@ public class World {
     public void verboseRender(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         mapRenderer.verboseRender(container, game, g);
         bulletManager.verboseRenderObjects(container, game, g);
+        enemyManager.verboseRenderObjects(container, game, g);
         player.verboseRender(container, game, g);
         worldGUI.verboseRender(container, game, g);
         
@@ -97,6 +102,8 @@ public class World {
         bulletManager.checkCollisions();
         bulletManager.updateObjects(container, game, delta);
         bulletManager.removeObjects();
+        enemyManager.updateObjects(container, game, delta);
+        enemyManager.removeObjects();
         player.update(container, game, delta);
         worldGUI.update(container, game, delta);
     }
@@ -104,6 +111,7 @@ public class World {
     public void verboseUpdate(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         mapRenderer.verboseUpdate(container, game, delta);
         bulletManager.verboseUpdateObjects(container, game, delta);
+        enemyManager.verboseUpdateObjects(container, game, delta);
         player.verboseUpdate(container, game, delta);
         worldGUI.verboseUpdate(container, game, delta);
     }

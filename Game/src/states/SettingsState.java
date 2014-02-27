@@ -5,7 +5,7 @@
  */
 package states;
 
-import control.FontTool;
+import tools.FontTool;
 import game.Game;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -19,7 +19,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import settings.SettingsTool;
+import tools.SettingsTool;
 
 /**
  *
