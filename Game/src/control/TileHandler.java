@@ -14,7 +14,7 @@ import org.newdawn.slick.state.StateBasedGame;
  *
  * @author Patrick
  */
-public class TileManager {
+public class TileHandler {
 
     public static final int water = 1;
     public static final int dirt = 2;

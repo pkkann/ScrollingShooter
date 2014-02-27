@@ -5,7 +5,7 @@
  */
 package world.map;
 
-import control.TileManager;
+import control.TileHandler;
 import java.util.Arrays;
 import java.util.LinkedList;
 import org.newdawn.slick.GameContainer;
@@ -20,7 +20,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class Tiler {
 
-    private TileManager tileManager;
+    private TileHandler tileManager;
 
     private LinkedList<int[]> map;
     private boolean repeat = true;
@@ -32,7 +32,7 @@ public class Tiler {
     private boolean loadNextMap;
     private int oldMapSize;
 
-    public Tiler(TileManager tileManager) {
+    public Tiler(TileHandler tileManager) {
         map = new LinkedList<>();
 
         this.tileManager = tileManager;

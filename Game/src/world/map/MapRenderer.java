@@ -5,7 +5,7 @@
  */
 package world.map;
 
-import control.TileManager;
+import control.TileHandler;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -24,7 +24,7 @@ import settings.SettingsTool;
 public class MapRenderer {
 
     private LinkedList<int[]> map;
-    private TileManager tileManager;
+    private TileHandler tileManager;
     private float scroll;
     private float scrollSpeed = 0.1f;
 
@@ -34,15 +34,12 @@ public class MapRenderer {
     private boolean loadNextMap;
     private int oldMapSize;
     
-    private Runtime runtime;
-    private float totalMemory = 0;
-    private float freeMemory = 0;
-    private float usedMemory = 0;
+    
 
-    public MapRenderer(TileManager tileManager) {
+    public MapRenderer(TileHandler tileManager) {
         map = new LinkedList<>();
         this.tileManager = tileManager;
-        runtime = Runtime.getRuntime();
+        
     }
 
     public void loadNewMap(int[][] nextMap) {
@@ -138,11 +135,6 @@ public class MapRenderer {
                 g.drawString("NextMapArrayPos: " + nextMapArrayPos, container.getWidth() - 200, 140);
                 g.drawString("OldMapSize: " + oldMapSize, container.getWidth() - 200, 160);
             }
-            
-            g.setColor(Color.red);
-            g.drawString("Used memory: " + usedMemory, 200, 10);
-            g.drawString("Free memory: " + freeMemory, 200, 30);
-            g.drawString("Total memory: " + totalMemory, 200,50);
         }
     }
 
@@ -217,9 +209,7 @@ public class MapRenderer {
     }
 
     public void verboseUpdate(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        usedMemory = (runtime.totalMemory() - runtime.freeMemory()) / 1024;
-        freeMemory = runtime.freeMemory() / 1024;
-        totalMemory = runtime.totalMemory() / 1024;
+        
     }
 
 }

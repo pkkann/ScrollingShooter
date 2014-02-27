@@ -12,11 +12,11 @@ import org.newdawn.slick.TrueTypeFont;
  *
  * @author Patrick
  */
-public class FontManager {
+public class FontTool {
 
     public static TrueTypeFont titleFont = new TrueTypeFont(new Font("Verdana", Font.BOLD, 32), true);
 
-    private FontManager() {
+    private FontTool() {
     }
 
 }

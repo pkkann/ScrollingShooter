@@ -28,9 +28,14 @@ public class PlayState extends BasicGameState {
 
     private final int id;
     private World world;
+    private Runtime runtime;
+    private float totalMemory = 0;
+    private float freeMemory = 0;
+    private float usedMemory = 0;
 
     public PlayState(int id) {
         this.id = id;
+        runtime = Runtime.getRuntime();
     }
 
     @Override
@@ -46,25 +51,37 @@ public class PlayState extends BasicGameState {
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-        //Draw background color
         g.setColor(Color.white);
         g.fillRect(0, 0, container.getWidth(), container.getHeight());
 
         world.render(container, game, g);
-        
+
         if (SettingsTool.getInstance().getPropertyAsBoolean("verbose")) {
-            g.setColor(Color.red);
+            world.verboseRender(container, game, g);
+            g.setColor(Color.white);
             g.drawString(String.valueOf(container.getFPS()), 10, 10);
+
+            g.setColor(Color.white);
+            g.drawString("Used memory: " + usedMemory, 200, 10);
+            g.drawString("Free memory: " + freeMemory, 200, 30);
+            g.drawString("Total memory: " + totalMemory, 200, 50);
         }
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        
         world.update(container, game, delta);
-        
-        if(container.getInput().isKeyDown(Input.KEY_ESCAPE)) {
+
+        if (container.getInput().isKeyDown(Input.KEY_ESCAPE)) {
             game.enterState(Game.MENUSTATE);
+        }
+
+        if (SettingsTool.getInstance().getPropertyAsBoolean("verbose")) {
+            world.verboseUpdate(container, game, delta);
+
+            usedMemory = (runtime.totalMemory() - runtime.freeMemory()) / 1024;
+            freeMemory = runtime.freeMemory() / 1024;
+            totalMemory = runtime.totalMemory() / 1024;
         }
     }
 

@@ -5,7 +5,7 @@
  */
 package states;
 
-import control.FontManager;
+import control.FontTool;
 import game.Game;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -51,7 +51,7 @@ public class SettingsState extends BasicGameState {
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         g.setColor(Color.white);
-        FontManager.titleFont.drawString(150, 100, "SETTINGS", Color.white);
+        FontTool.titleFont.drawString(150, 100, "SETTINGS", Color.white);
         
         verboseBox.draw(g, 400, 200);
         updateOnlyWhenVisibleBox.draw(g, 400, 250);
