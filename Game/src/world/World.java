@@ -12,6 +12,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import world.map.MapRenderer;
 import world.map.Tiler;
 
 /**
@@ -20,8 +21,8 @@ import world.map.Tiler;
  */
 public class World {
 
+    private MapRenderer mapRenderer;
     private TileManager tileManager;
-    private Tiler tiler;
     private BulletManager bulletManager;
     private Player player;
     private int[][] startMap = {
@@ -53,8 +54,8 @@ public class World {
 
     public World() {
         tileManager = new TileManager();
-        tiler = new Tiler(tileManager);
         bulletManager = new BulletManager();
+        mapRenderer = new MapRenderer(tileManager);
         player = new Player(0, 0, bulletManager);
     }
 
@@ -63,21 +64,23 @@ public class World {
         int height = container.getHeight();
 
         tileManager.init(container, game);
-        tiler.init(container, game, startMap);
+        mapRenderer.loadNewMapInstant(startMap);
 
         player.setX((width / 2) - (player.getWidth() / 2));
         player.setY(height - player.getHeight() - 20);
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-        tiler.render(container, game, g);
+        mapRenderer.render(container, game, g);
+        mapRenderer.verboseRender(container, game, g);
         bulletManager.renderBullets(container, game, g);
         player.render(container, game, g);
         player.verboseRender(container, game, g);
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        tiler.update(container, game, delta);
+        mapRenderer.update(container, game, delta);
+        mapRenderer.verboseUpdate(container, game, delta);
         bulletManager.checkCollisions();
         bulletManager.updateBullets(container, game, delta);
         bulletManager.removeBullets();

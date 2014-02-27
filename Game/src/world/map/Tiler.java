@@ -63,16 +63,20 @@ public class Tiler {
     }
 
     private void changeMap() {
-        if (mapDelta > 0) {
+        
+        if (mapDelta > 0) { //Hvis det nye map er længere
+            //Hvis vi er nået til den sidste række, så stop med at loade next map
             if (nextMapArrayPos == nextMap.length - 1) {
                 loadNextMap = false;
                 map.addFirst(nextMap[nextMapArrayPos]);
                 nextMapArrayPos = 0;
             } else {
+                //hvis  næste position er større end det gamle maps size, så er hele det gamle map fjernet, og der bliver derfor ikke fjernet fra mappet
                 if (nextMapArrayPos >= oldMapSize) {
                     map.addFirst(nextMap[nextMapArrayPos]);
                     nextMapArrayPos++;
                 } else {
+                    //fjern sidste position og sæt en ny række ind fra det nye map
                     map.pollLast();
                     map.addFirst(nextMap[nextMapArrayPos]);
                     nextMapArrayPos++;
