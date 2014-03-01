@@ -52,12 +52,12 @@ public class SettingsState extends BasicGameState {
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         g.setColor(Color.white);
         FontTool.titleFont.drawString(150, 100, "SETTINGS", Color.white);
-        
+
         verboseBox.draw(g, 400, 200);
         updateOnlyWhenVisibleBox.draw(g, 400, 250);
         fullscreenBox.draw(g, 400, 300);
-        
-        backButton.draw(g, 700, 550);
+
+        backButton.draw(g, 710, 550);
         saveButton.draw(g, 600, 550);
     }
 
@@ -66,23 +66,23 @@ public class SettingsState extends BasicGameState {
         verboseBox.update(container, game, delta);
         updateOnlyWhenVisibleBox.update(container, game, delta);
         fullscreenBox.update(container, game, delta);
-        
+
         backButton.update(container, game, delta);
         saveButton.update(container, game, delta);
     }
 
     private void initGUI(GameContainer container, StateBasedGame game) throws SlickException {
-        //BackButton
-        backButton = new JellyButton() {
-
-            @Override
-            public void mousePressed(GameContainer container, StateBasedGame game) {
-                game.enterState(Game.MENUSTATE);
-            }
-        };
-        backButton.setIconNormal(new Image("res/gui/back.png"));
-        backButton.setIconHover(new Image("res/gui/back_wbg.png"));
-        
+//        //BackButton
+//        backButton = new JellyButton() {
+//
+//            @Override
+//            public void mousePressed(GameContainer container, StateBasedGame game) {
+//                game.enterState(Game.MENUSTATE);
+//            }
+//        };
+//        backButton.setIconNormal(new Image("res/gui/back.png"));
+//        backButton.setIconHover(new Image("res/gui/back_wbg.png"));
+//        
         //VerboseBOx
         verboseBox = new JellyCheckbox();
         verboseBox.setLabel("VERBOSE");
@@ -103,22 +103,62 @@ public class SettingsState extends BasicGameState {
         fullscreenBox.setCheckedImage(new Image("res/gui/checkbox_checked.png"));
         fullscreenBox.setUncheckedImage(new Image("res/gui/checkbox_unchecked.png"));
         fullscreenBox.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("fullscreen"));
+//
+//        //SaveButton
+//        saveButton = new JellyButton() {
+//
+//            @Override
+//            public void mousePressed(GameContainer container, StateBasedGame game) {
+//                //Get gui sets
+//                boolean verbose = verboseBox.isChecked();
+//                boolean uowv = updateOnlyWhenVisibleBox.isChecked();
+//                boolean fullscreen = fullscreenBox.isChecked();
+//                
+//                //Save settings and go to menu
+//                SettingsTool.getInstance().setProperty("verbose", verbose);
+//                SettingsTool.getInstance().setProperty("updateOnlyWhenVisible", uowv);
+//                SettingsTool.getInstance().setProperty("fullscreen", fullscreen);
+//                
+//                try {
+//                    SettingsTool.getInstance().saveProperties();
+//                    SettingsTool.getInstance().reloadProperties(container);
+//                } catch (IOException | SlickException ex) {
+//                    Logger.getLogger(SettingsState.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                game.enterState(Game.MENUSTATE);
+//            }
+//        };
+//        saveButton.setIconNormal(new Image("res/gui/save.png"));
+//        saveButton.setIconHover(new Image("res/gui/save_wbg.png"));
 
-        //SaveButton
-        saveButton = new JellyButton() {
+        Color textColor = Color.white;
+        Color normalCol = Color.darkGray;
+        Color hoverCol = Color.gray;
+        int width = 100;
+        int height = 30;
+
+        backButton = new JellyButton("BACK", textColor, FontTool.buttonFont, normalCol, hoverCol, width, height) {
 
             @Override
-            public void mousePressed(GameContainer container, StateBasedGame game) {
+            public void action(GameContainer container, StateBasedGame game) {
+                game.enterState(Game.MENUSTATE);
+            }
+        };
+
+        saveButton = new JellyButton("SAVE", textColor, FontTool.buttonFont, normalCol, hoverCol, width, height) {
+
+            @Override
+            public void action(GameContainer container, StateBasedGame game) {
                 //Get gui sets
                 boolean verbose = verboseBox.isChecked();
                 boolean uowv = updateOnlyWhenVisibleBox.isChecked();
                 boolean fullscreen = fullscreenBox.isChecked();
-                
+
                 //Save settings and go to menu
                 SettingsTool.getInstance().setProperty("verbose", verbose);
                 SettingsTool.getInstance().setProperty("updateOnlyWhenVisible", uowv);
                 SettingsTool.getInstance().setProperty("fullscreen", fullscreen);
-                
+
                 try {
                     SettingsTool.getInstance().saveProperties();
                     SettingsTool.getInstance().reloadProperties(container);
@@ -128,8 +168,6 @@ public class SettingsState extends BasicGameState {
                 game.enterState(Game.MENUSTATE);
             }
         };
-        saveButton.setIconNormal(new Image("res/gui/save.png"));
-        saveButton.setIconHover(new Image("res/gui/save_wbg.png"));
     }
 
 }
