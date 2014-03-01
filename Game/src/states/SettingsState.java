@@ -11,11 +11,10 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jellygui.JellyButton;
-import jellygui.JellyCheckbox;
+import jellygui.JellyCheckBox;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -30,9 +29,9 @@ public class SettingsState extends BasicGameState {
     private final int id;
     private JellyButton backButton;
     private JellyButton saveButton;
-    private JellyCheckbox verboseBox;
-    private JellyCheckbox updateOnlyWhenVisibleBox;
-    private JellyCheckbox fullscreenBox;
+    private JellyCheckBox verboseBox;
+    private JellyCheckBox updateOnlyWhenVisibleBox;
+    private JellyCheckBox fullscreenBox;
 
     public SettingsState(int id) {
         this.id = id;
@@ -72,72 +71,29 @@ public class SettingsState extends BasicGameState {
     }
 
     private void initGUI(GameContainer container, StateBasedGame game) throws SlickException {
-//        //BackButton
-//        backButton = new JellyButton() {
-//
-//            @Override
-//            public void mousePressed(GameContainer container, StateBasedGame game) {
-//                game.enterState(Game.MENUSTATE);
-//            }
-//        };
-//        backButton.setIconNormal(new Image("res/gui/back.png"));
-//        backButton.setIconHover(new Image("res/gui/back_wbg.png"));
-//        
-        //VerboseBOx
-        verboseBox = new JellyCheckbox();
-        verboseBox.setLabel("VERBOSE");
-        verboseBox.setCheckedImage(new Image("res/gui/checkbox_checked.png"));
-        verboseBox.setUncheckedImage(new Image("res/gui/checkbox_unchecked.png"));
-        verboseBox.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("verbose"));
-        
-        //UpdateOnlyWhenVisible
-        updateOnlyWhenVisibleBox = new JellyCheckbox();
-        updateOnlyWhenVisibleBox.setLabel("Update only when visible");
-        updateOnlyWhenVisibleBox.setCheckedImage(new Image("res/gui/checkbox_checked.png"));
-        updateOnlyWhenVisibleBox.setUncheckedImage(new Image("res/gui/checkbox_unchecked.png"));
-        updateOnlyWhenVisibleBox.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("updateOnlyWhenVisible"));
-        
-        //Fullscreen
-        fullscreenBox = new JellyCheckbox();
-        fullscreenBox.setLabel("Fullscreen");
-        fullscreenBox.setCheckedImage(new Image("res/gui/checkbox_checked.png"));
-        fullscreenBox.setUncheckedImage(new Image("res/gui/checkbox_unchecked.png"));
-        fullscreenBox.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("fullscreen"));
-//
-//        //SaveButton
-//        saveButton = new JellyButton() {
-//
-//            @Override
-//            public void mousePressed(GameContainer container, StateBasedGame game) {
-//                //Get gui sets
-//                boolean verbose = verboseBox.isChecked();
-//                boolean uowv = updateOnlyWhenVisibleBox.isChecked();
-//                boolean fullscreen = fullscreenBox.isChecked();
-//                
-//                //Save settings and go to menu
-//                SettingsTool.getInstance().setProperty("verbose", verbose);
-//                SettingsTool.getInstance().setProperty("updateOnlyWhenVisible", uowv);
-//                SettingsTool.getInstance().setProperty("fullscreen", fullscreen);
-//                
-//                try {
-//                    SettingsTool.getInstance().saveProperties();
-//                    SettingsTool.getInstance().reloadProperties(container);
-//                } catch (IOException | SlickException ex) {
-//                    Logger.getLogger(SettingsState.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                game.enterState(Game.MENUSTATE);
-//            }
-//        };
-//        saveButton.setIconNormal(new Image("res/gui/save.png"));
-//        saveButton.setIconHover(new Image("res/gui/save_wbg.png"));
-
         Color textColor = Color.white;
+        Color checkedCol = Color.orange;
+        Color uncheckedCol = Color.darkGray;
+        int inlineWidth = 8;
+        int widthChk = 30;
+        int heightChk = 30;
+        
+        verboseBox = new JellyCheckBox("Verbose", textColor, FontTool.checkBoxFont, inlineWidth, checkedCol, uncheckedCol, widthChk, heightChk);
+        verboseBox.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("verbose"));
+        updateOnlyWhenVisibleBox = new JellyCheckBox("Update only when visible", textColor, FontTool.checkBoxFont, inlineWidth, checkedCol, uncheckedCol, widthChk, heightChk);
+        updateOnlyWhenVisibleBox.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("updateOnlyWhenVisible"));
+        fullscreenBox = new JellyCheckBox("Fullscreen", textColor, FontTool.checkBoxFont, inlineWidth, checkedCol, uncheckedCol, widthChk, heightChk);
+        fullscreenBox.setChecked(SettingsTool.getInstance().getPropertyAsBoolean("fullscreen"));
+        
+        
         Color normalCol = Color.darkGray;
         Color hoverCol = Color.gray;
-        int width = 100;
-        int height = 30;
+        Color borderCol = Color.gray;
+        int lineWidth = 2;
+        int widthBtn = 100;
+        int heightBtn = 30;
 
-        backButton = new JellyButton("BACK", textColor, FontTool.buttonFont, normalCol, hoverCol, width, height) {
+        backButton = new JellyButton("BACK", textColor, FontTool.buttonFont, borderCol, lineWidth, normalCol, hoverCol, widthBtn, heightBtn) {
 
             @Override
             public void action(GameContainer container, StateBasedGame game) {
@@ -145,7 +101,7 @@ public class SettingsState extends BasicGameState {
             }
         };
 
-        saveButton = new JellyButton("SAVE", textColor, FontTool.buttonFont, normalCol, hoverCol, width, height) {
+        saveButton = new JellyButton("SAVE", textColor, FontTool.buttonFont, borderCol, lineWidth, normalCol, hoverCol, widthBtn, heightBtn) {
 
             @Override
             public void action(GameContainer container, StateBasedGame game) {

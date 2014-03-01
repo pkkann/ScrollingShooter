@@ -59,13 +59,15 @@ public class MenuState extends BasicGameState {
     }
     
     private void initButtons() throws SlickException {
-        Color textColor = Color.white;
-        Color normalCol = Color.darkGray;
-        Color hoverCol = Color.gray;
+        Color textColor = Color.black;
+        Color normalCol = Color.white;
+        Color hoverCol = Color.orange;
+        Color borderCol = Color.gray;
+        int lineWidth = 2;
         int width = 100;
         int height = 30;
         
-        playButton = new JellyButton("PLAY", textColor, FontTool.buttonFont, normalCol, hoverCol, width, height) {
+        playButton = new JellyButton("PLAY", textColor, FontTool.buttonFont, borderCol, lineWidth, normalCol, hoverCol, width, height) {
             
             @Override
             public void action(GameContainer container, StateBasedGame game) {
@@ -73,7 +75,7 @@ public class MenuState extends BasicGameState {
             }
         };
         
-        settingsButton = new JellyButton("SETTINGS", textColor, FontTool.buttonFont, normalCol, hoverCol, width, height) {
+        settingsButton = new JellyButton("SETTINGS", textColor, FontTool.buttonFont, borderCol, lineWidth, normalCol, hoverCol, width, height) {
             
             @Override
             public void action(GameContainer container, StateBasedGame game) {
@@ -81,7 +83,7 @@ public class MenuState extends BasicGameState {
             }
         };
         
-        exitButton = new JellyButton("EXIT", textColor, FontTool.buttonFont, normalCol, hoverCol, width, height) {
+        exitButton = new JellyButton("EXIT", textColor, FontTool.buttonFont, borderCol, lineWidth, normalCol, hoverCol, width, height) {
             
             @Override
             public void action(GameContainer container, StateBasedGame game) {

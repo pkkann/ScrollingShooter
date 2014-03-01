@@ -16,6 +16,7 @@ public class FontTool {
 
     public static TrueTypeFont titleFont = new TrueTypeFont(new Font("Verdana", Font.BOLD, 32), true);
     public static TrueTypeFont buttonFont = new TrueTypeFont(new Font("Verdana", Font.BOLD, 16), true);
+    public static TrueTypeFont checkBoxFont = new TrueTypeFont(new Font("Verdana", Font.BOLD, 14), true);
 
     private FontTool() {
     }

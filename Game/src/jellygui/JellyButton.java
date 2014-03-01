@@ -26,8 +26,10 @@ public abstract class JellyButton implements JellyComponent {
     private Rectangle bounds;
     private Rectangle mouse;
     private Color color, normalCol, hoverCol;
+    private Color borderCol;
     private Color textColor;
     private int width, height;
+    private int borderWidth;
 
     /**
      * Constructs a JellyButton. The image array should have normal image on 0,
@@ -54,12 +56,14 @@ public abstract class JellyButton implements JellyComponent {
      * @param text
      * @param textColor
      * @param font
+     * @param borderCol
+     * @param borderWidth
      * @param normalCol
      * @param hoverCol
      * @param width
      * @param height 
      */
-    public JellyButton(String text, Color textColor, TrueTypeFont font, Color normalCol, Color hoverCol, int width, int height) {
+    public JellyButton(String text, Color textColor, TrueTypeFont font, Color borderCol, int borderWidth, Color normalCol, Color hoverCol, int width, int height) {
         this.normalCol = normalCol;
         this.hoverCol = hoverCol;
         this.color = normalCol;
@@ -68,6 +72,8 @@ public abstract class JellyButton implements JellyComponent {
         this.font = font;
         this.width = width;
         this.height = height;
+        this.borderCol = borderCol;
+        this.borderWidth = borderWidth;
         mouse = new Rectangle(0, 0, 2, 2);
         bounds = new Rectangle(0, 0, width, height);
     }
@@ -126,6 +132,10 @@ public abstract class JellyButton implements JellyComponent {
         } else {
             g.setColor(color);
             g.fillRect(x, y, width, height);
+            g.setColor(borderCol);
+            g.setLineWidth(borderWidth);
+            g.drawRect(x, y, width, height);
+            
             font.drawString(x + (width / 2) - (font.getWidth(text) / 2), y + (height / 2) - (font.getHeight() / 2), text, textColor);
         }
 
