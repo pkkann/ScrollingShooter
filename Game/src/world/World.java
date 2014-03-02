@@ -8,6 +8,7 @@ package world;
 import entities.player.Player;
 import control.BulletManager;
 import control.EnemyManager;
+import control.LevelHandler;
 import control.TileHandler;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -27,6 +28,7 @@ public class World {
     private TileHandler tileManager;
     private BulletManager bulletManager;
     private EnemyManager enemyManager;
+    private LevelHandler levelHandler;
     private Player player;
     private WorldGUI worldGUI;
     private int[][] startMap = {
@@ -61,6 +63,7 @@ public class World {
         bulletManager = new BulletManager();
         mapRenderer = new MapRenderer(tileManager);
         enemyManager = new EnemyManager();
+        levelHandler = new LevelHandler(enemyManager, mapRenderer);
         player = new Player(0, 0, bulletManager);
         worldGUI = new WorldGUI(player);
     }

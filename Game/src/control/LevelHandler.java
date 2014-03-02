@@ -6,30 +6,35 @@
 
 package control;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import world.level.Level1;
+import world.level.LevelDefault;
+import world.map.MapRenderer;
 
 /**
  *
  * @author patrick
  */
 public class LevelHandler {
-    
-    private ArrayList<Level> levels;
+    private Level1 level1;
+    private LevelDefault levelDefault;
     
     private EnemyManager enemyManager;
+    private MapRenderer mapRenderer;
     
-    public LevelHandler(EnemyManager enemyManager) {
+    public LevelHandler(EnemyManager enemyManager, MapRenderer mapRenderer) {
         this.enemyManager = enemyManager;
-        levels = new ArrayList<>();
+        this.mapRenderer = mapRenderer;
+        initLevels();
+        mapRenderer.loadNewMap(level1.getBgLayer());
     }
     
-    public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-        
+    private void initLevels() {
+        level1 = new Level1();
+        levelDefault = new LevelDefault();
     }
     
     public void verboseRender(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {

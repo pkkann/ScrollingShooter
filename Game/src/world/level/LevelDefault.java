@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package world.level;
 
 import tools.LevelFileReader;
@@ -11,31 +12,21 @@ import tools.LevelFileReader;
  *
  * @author patrick
  */
-public class Level1 {
-
+public class LevelDefault {
+    
     private int[][] bgLayer;
-    private String bgLayer_path = "res/levels/level1.txt";
-
-    private int[][] enemyLayer;
-    private String enemyLayer_path = "";
+    private String bgLayer_path = "res/levels/defaultLevel.txt";
     
-    
-
-    public Level1() {
+    public LevelDefault() {
         loadLayers();
     }
     
     private void loadLayers() {
         bgLayer = LevelFileReader.readLevel(bgLayer_path);
-//        enemyLayer = LevelFileReader.readLevel(enemyLayer_path);
     }
-
+    
     public int[][] getBgLayer() {
         return bgLayer;
     }
-
-    public int[][] getEnemyLayer() {
-        return enemyLayer;
-    }
-
+    
 }
