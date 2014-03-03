@@ -30,6 +30,7 @@ public class LevelHandler {
         this.mapRenderer = mapRenderer;
         initLevels();
         mapRenderer.loadNewMap(level1.getBgLayer());
+        
     }
     
     private void initLevels() {

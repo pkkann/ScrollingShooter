@@ -26,7 +26,7 @@ public class MapRenderer {
     private LinkedList<int[]> map;
     private TileHandler tileManager;
     private float scroll;
-    private float scrollSpeed = 0.1f;
+    private float scrollSpeed = 3f;
 
     private int mapDelta;
     private int nextMapArrayPos;
@@ -39,7 +39,10 @@ public class MapRenderer {
     public MapRenderer(TileHandler tileManager) {
         map = new LinkedList<>();
         this.tileManager = tileManager;
-        
+    }
+    
+    public boolean getLoadNextMap() {
+        return loadNextMap;
     }
 
     public void loadNewMap(int[][] nextMap) {
