@@ -46,8 +46,8 @@ public class MenuState extends BasicGameState {
         g.setColor(Color.white);
         float btnX = (container.getWidth() / 2) - (playButton.getWidth() / 2);
         playButton.draw(g, btnX, 200);
-        settingsButton.draw(g, btnX, 240);
-        exitButton.draw(g, btnX, 280);
+        settingsButton.draw(g, btnX, 250);
+        exitButton.draw(g, btnX, 300);
         
     }
 
@@ -63,9 +63,9 @@ public class MenuState extends BasicGameState {
         Color normalCol = Color.white;
         Color hoverCol = Color.orange;
         Color borderCol = Color.gray;
-        int lineWidth = 2;
-        int width = 100;
-        int height = 30;
+        int lineWidth = 5;
+        int width = 200;
+        int height = 40;
         
         playButton = new JellyButton("PLAY", textColor, FontTool.buttonFont, borderCol, lineWidth, normalCol, hoverCol, width, height) {
             

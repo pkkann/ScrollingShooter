@@ -6,9 +6,6 @@
 package control;
 
 import entities.Sprite;
-import entities.bullet.Bullet;
-import entities.bullet.GreenBullet;
-import entities.bullet.RedBullet;
 import entities.enemy.Enemy;
 import entities.enemy.OrangeEnemy;
 import java.util.ArrayList;
@@ -24,7 +21,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class EnemyManager implements SpriteManager {
 
-    private ArrayList<Enemy> enemies;
+    private final ArrayList<Enemy> enemies;
 
     public EnemyManager() {
         enemies = new ArrayList<>();

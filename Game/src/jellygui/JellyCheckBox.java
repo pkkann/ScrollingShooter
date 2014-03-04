@@ -21,12 +21,12 @@ import org.newdawn.slick.state.StateBasedGame;
 public class JellyCheckBox implements JellyComponent {
 
     private Image img, checkedImg, uncheckedImg;
-    private String text;
-    private TrueTypeFont font;
-    private Rectangle bounds;
-    private Rectangle mouse;
+    private final String text;
+    private final TrueTypeFont font;
+    private final Rectangle bounds;
+    private final Rectangle mouse;
     private Color checkedCol, uncheckedCol;
-    private Color textColor;
+    private final Color textColor;
     private int width, height;
     private boolean checked = false;
     private int inlineWidth;

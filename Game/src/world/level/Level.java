@@ -10,10 +10,22 @@ package world.level;
  *
  * @author Patrick
  */
-public interface Level {
+public abstract class Level {
     
-    public int[][] getBgLayer();
+    private String name;
     
-    public int[][] getEnemyLayer();
+    public Level(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    public abstract int[][] getBgLayer();
+    
+    public abstract int[][] getMidLayer();
+    
+    public abstract int[][] getEnemyLayer();
     
 }

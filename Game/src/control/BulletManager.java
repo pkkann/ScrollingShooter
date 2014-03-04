@@ -22,7 +22,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class BulletManager implements SpriteManager {
 
-    private ArrayList<Bullet> bullets;
+    private final ArrayList<Bullet> bullets;
     private final float topCount = 150;
     private float counter = topCount;
 

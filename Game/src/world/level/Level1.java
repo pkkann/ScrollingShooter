@@ -11,31 +11,30 @@ import tools.LevelFileReader;
  *
  * @author patrick
  */
-public class Level1 implements Level {
+public class Level1 extends Level {
 
-    private int[][] bgLayer;
-    private String bgLayer_path = "res/levels/level1.txt";
-
-    private int[][] enemyLayer;
-    private String enemyLayer_path = "";
-    
-    
+    private final int[][] bgLayer;
+    private final String bgLayer_path;
 
     public Level1() {
-        loadLayers();
-    }
-    
-    private void loadLayers() {
+        super("Level1");
+        this.bgLayer_path = "res/levels/level1.txt";
         bgLayer = LevelFileReader.readLevel(bgLayer_path);
-//        enemyLayer = LevelFileReader.readLevel(enemyLayer_path);
     }
 
+    @Override
     public int[][] getBgLayer() {
         return bgLayer;
     }
 
+    @Override
     public int[][] getEnemyLayer() {
-        return enemyLayer;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int[][] getMidLayer() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package world.map;
+package world.level;
 
 import control.TileHandler;
-import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.LinkedList;
 import org.newdawn.slick.Color;
@@ -23,25 +22,23 @@ import tools.SettingsTool;
  */
 public class MapRenderer {
 
-    private LinkedList<int[]> map;
-    private TileHandler tileManager;
+    private final LinkedList<int[]> map;
+    private final TileHandler tileManager;
     private float scroll;
-    private float scrollSpeed = 3f;
+    private final float scrollSpeed = 0.1f;
 
     private int mapDelta;
     private int nextMapArrayPos;
     private int[][] nextMap;
     private boolean loadNextMap;
     private int oldMapSize;
-    
-    
 
     public MapRenderer(TileHandler tileManager) {
         map = new LinkedList<>();
         this.tileManager = tileManager;
     }
     
-    public boolean getLoadNextMap() {
+    public boolean isLoadingNextMap() {
         return loadNextMap;
     }
 

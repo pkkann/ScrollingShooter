@@ -19,7 +19,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class WorldGUI {
     
-    private Player player;
+    private final Player player;
     private int iX;
     private int iY;
     

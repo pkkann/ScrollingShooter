@@ -12,25 +12,29 @@ import tools.LevelFileReader;
  *
  * @author patrick
  */
-public class LevelDefault implements Level {
+public class LevelDefault extends Level {
     
-    private int[][] bgLayer;
-    private String bgLayer_path = "res/levels/defaultLevel.txt";
+    private final int[][] bgLayer;
+    private final String bgLayer_path;
     
     public LevelDefault() {
-        loadLayers();
-    }
-    
-    private void loadLayers() {
+        super("LevelDefault");
+        this.bgLayer_path = "res/levels/defaultLevel.txt";
         bgLayer = LevelFileReader.readLevel(bgLayer_path);
     }
     
+    @Override
     public int[][] getBgLayer() {
         return bgLayer;
     }
 
     @Override
     public int[][] getEnemyLayer() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int[][] getMidLayer() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

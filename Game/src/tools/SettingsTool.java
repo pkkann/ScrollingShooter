@@ -38,7 +38,7 @@ public class SettingsTool {
 
     public static class SettingsManager {
 
-        private Properties settings;
+        private final Properties settings;
         private OutputStream output;
         private InputStream input;
         private final File name;
@@ -108,12 +108,12 @@ public class SettingsTool {
             settings.load(input);
             input.close();
 
-            boolean showOnlyWhenVisible = getPropertyAsBoolean("updateOnlyWhenVisible");
+            boolean updateOnlyWhenVisible = getPropertyAsBoolean("updateOnlyWhenVisible");
             boolean verbose = getPropertyAsBoolean("verbose");
             boolean fullscreen = getPropertyAsBoolean("fullscreen");
 
             container.setVerbose(verbose);
-            container.setUpdateOnlyWhenVisible(showOnlyWhenVisible);
+            container.setUpdateOnlyWhenVisible(updateOnlyWhenVisible);
             container.setFullscreen(fullscreen);
         }
 

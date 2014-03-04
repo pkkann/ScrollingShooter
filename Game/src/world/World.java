@@ -14,7 +14,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-import world.map.MapRenderer;
+import world.level.LevelRenderer;
+import world.level.MapRenderer;
 
 /**
  *
@@ -24,46 +25,20 @@ public class World {
 
     
 
-    private MapRenderer mapRenderer;
-    private TileHandler tileManager;
-    private BulletManager bulletManager;
-    private EnemyManager enemyManager;
-    private LevelHandler levelHandler;
-    private Player player;
-    private WorldGUI worldGUI;
-    private int[][] startMap = {
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
+    private final TileHandler tileManager;
+    private final BulletManager bulletManager;
+    private final EnemyManager enemyManager;
+    private final LevelRenderer levelRenderer;
+    private final LevelHandler levelHandler;
+    private final Player player;
+    private final WorldGUI worldGUI;
 
     public World() {
         tileManager = new TileHandler();
         bulletManager = new BulletManager();
-        mapRenderer = new MapRenderer(tileManager);
         enemyManager = new EnemyManager();
-        levelHandler = new LevelHandler(enemyManager, mapRenderer);
+        levelRenderer = new LevelRenderer(tileManager);
+        levelHandler = new LevelHandler(levelRenderer);
         player = new Player(0, 0, bulletManager);
         worldGUI = new WorldGUI(player);
     }
@@ -74,7 +49,6 @@ public class World {
 
         tileManager.init(container, game);
         levelHandler.init(container, game);
-        //mapRenderer.loadNewMapInstant(startMap);
 
         player.setX((width / 2) - (player.getWidth() / 2));
         player.setY(height - player.getHeight() - 90);
@@ -83,28 +57,25 @@ public class World {
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-        mapRenderer.render(container, game, g);
+        levelRenderer.render(container, game, g);
         bulletManager.renderObjects(container, game, g);
         enemyManager.renderObjects(container, game, g);
         player.render(container, game, g);
         worldGUI.render(container, game, g);
-        
     }
 
     public void verboseRender(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         levelHandler.verboseRender(container, game, g);
-        mapRenderer.verboseRender(container, game, g);
+        levelRenderer.verboseRender(container, game, g);
         bulletManager.verboseRenderObjects(container, game, g);
         enemyManager.verboseRenderObjects(container, game, g);
         player.verboseRender(container, game, g);
         worldGUI.verboseRender(container, game, g);
-        
-        
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         levelHandler.update(container, game, delta);
-        mapRenderer.update(container, game, delta);
+        levelRenderer.update(container, game, delta);
         bulletManager.checkCollisions();
         bulletManager.updateObjects(container, game, delta);
         bulletManager.removeObjects();
@@ -116,7 +87,7 @@ public class World {
     
     public void verboseUpdate(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         levelHandler.verboseUpdate(container, game, delta);
-        mapRenderer.verboseUpdate(container, game, delta);
+        levelRenderer.verboseUpdate(container, game, delta);
         bulletManager.verboseUpdateObjects(container, game, delta);
         enemyManager.verboseUpdateObjects(container, game, delta);
         player.verboseUpdate(container, game, delta);

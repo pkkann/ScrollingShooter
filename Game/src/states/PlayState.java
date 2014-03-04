@@ -24,7 +24,7 @@ public class PlayState extends BasicGameState {
 
     private final int id;
     private World world;
-    private Runtime runtime;
+    private final Runtime runtime;
     private float totalMemory = 0;
     private float freeMemory = 0;
     private float usedMemory = 0;
@@ -55,12 +55,12 @@ public class PlayState extends BasicGameState {
         if (SettingsTool.getInstance().getPropertyAsBoolean("verbose")) {
             world.verboseRender(container, game, g);
             g.setColor(Color.white);
-            g.drawString(String.valueOf(container.getFPS()), 10, 10);
+            g.drawString("FPS: " + String.valueOf(container.getFPS()), 10, 10);
 
             g.setColor(Color.white);
-            g.drawString("Used memory: " + usedMemory, 200, 10);
-            g.drawString("Free memory: " + freeMemory, 200, 30);
-            g.drawString("Total memory: " + totalMemory, 200, 50);
+            g.drawString("Used memory: " + usedMemory, 10, 40);
+            g.drawString("Free memory: " + freeMemory, 10, 70);
+            g.drawString("Total memory: " + totalMemory, 10, 100);
         }
     }
 

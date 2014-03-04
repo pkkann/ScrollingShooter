@@ -6,6 +6,7 @@
 package control;
 
 import java.util.LinkedList;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -13,7 +14,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import world.level.Level;
 import world.level.Level1;
 import world.level.LevelDefault;
-import world.map.MapRenderer;
+import world.level.LevelRenderer;
+import world.level.MapRenderer;
 
 /**
  *
@@ -24,14 +26,13 @@ public class LevelHandler {
     private Level1 level1;
     private LevelDefault levelDefault;
 
-    private EnemyManager enemyManager;
-    private MapRenderer mapRenderer;
+    private final LevelRenderer levelRenderer;
 
-    private LinkedList<Level> levels;
+    private final LinkedList<Level> levels;
+    private Level currentLevel;
 
-    public LevelHandler(EnemyManager enemyManager, MapRenderer mapRenderer) {
-        this.enemyManager = enemyManager;
-        this.mapRenderer = mapRenderer;
+    public LevelHandler(LevelRenderer levelRenderer) {
+        this.levelRenderer = levelRenderer;
         levels = new LinkedList<>();
     }
 
@@ -41,24 +42,31 @@ public class LevelHandler {
 
         levels.add(level1);
         levels.add(levelDefault);
+        currentLevel = levelDefault;
+        
+        levelRenderer.loadNewLevelInstantly(currentLevel);
+    }
+    
+    private void nextLevel() {
+        currentLevel = levels.pop();
+        levelRenderer.loadNewLevel(currentLevel);
     }
 
     public void verboseRender(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-
+        g.setColor(Color.white);
+        g.drawString("Current level: " + currentLevel.getName(), 10, 130);
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        System.out.println(mapRenderer.getLoadNextMap());
         if (!levels.isEmpty()) {
-            if (!mapRenderer.getLoadNextMap()) {
-                mapRenderer.loadNewMap(levels.pop().getBgLayer());
+            if (!levelRenderer.isLoadingNextLevel()) {
+                nextLevel();
             }
         }
-
     }
 
     public void verboseUpdate(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-
+        
     }
 
 }

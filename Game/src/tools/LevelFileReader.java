@@ -37,12 +37,6 @@ public class LevelFileReader {
                 al.add(ii);
             }
             int[][] iii = al.toArray(new int[al.size()][32]);
-            for (int[] i : iii) {
-                for (int i2 : i) {
-                    System.out.print(i2 + ",");
-                }
-                System.out.println("");
-            }
             return iii;
         } catch (FileNotFoundException ex) {
             Logger.getLogger(LevelFileReader.class.getName()).log(Level.SEVERE, null, ex);

@@ -22,9 +22,9 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Player extends Sprite {
     
     private float speed = 0.5f;
-    private BulletManager bManager;
-    private int width = 50;
-    private int height = 50;
+    private final BulletManager bManager;
+    private final int width = 50;
+    private final int height = 50;
 
     public Player(float x, float y, BulletManager bManager) {
         super(x, y);

@@ -22,12 +22,12 @@ public abstract class JellyButton implements JellyComponent {
 
     private Image button, normal, hover;
     private String text;
-    private TrueTypeFont font;
-    private Rectangle bounds;
-    private Rectangle mouse;
+    private final TrueTypeFont font;
+    private final Rectangle bounds;
+    private final Rectangle mouse;
     private Color color, normalCol, hoverCol;
     private Color borderCol;
-    private Color textColor;
+    private final Color textColor;
     private int width, height;
     private int borderWidth;
 

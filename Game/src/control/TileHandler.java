@@ -18,27 +18,26 @@ public class TileHandler {
 
     public static final int water = 1;
     public static final int dirt = 2;
-    private Image waterImg, dirtImg;
-    private int tileSize = 32;
-    
-    public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        waterImg = new Image("res/tiles/water.png");
-        dirtImg = new Image("res/tiles/dirt.png");
+    private Image tileSheet;
+    private final int tileSize;
+    private final int typeDif;
+
+    public TileHandler() {
+        this.typeDif = 1;
+        this.tileSize = 32;
     }
-    
+
+    public void init(GameContainer container, StateBasedGame game) throws SlickException {
+        tileSheet = new Image("res/tiles/tilesheet_environment.png");
+    }
+
     public int getTileSize() {
         return tileSize;
     }
 
     public Image getTile(int type) {
-        switch(type) {
-            case water:
-                return waterImg;
-            case dirt:
-                return dirtImg;
-            default:
-                return null;
-        }
+        Image subI = tileSheet.getSubImage((type - typeDif) * tileSize, 0, tileSize, tileSize);
+        return subI;
     }
 
 }
