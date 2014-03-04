@@ -7,7 +7,6 @@ package world.level;
 
 import control.EnemyManager;
 import control.TileHandler;
-import entities.Sprite;
 import java.util.Arrays;
 import java.util.LinkedList;
 import org.newdawn.slick.Color;
@@ -81,7 +80,7 @@ public class LevelRenderer {
         nextLevel = lev;
         currentBgLayer.addAll(Arrays.asList(nextLevel.getBgLayer()));
 //        currentMidLayer.addAll(Arrays.asList(nextLevel.getMidLayer()));
-        currentEnemyLayer.addAll(Arrays.asList(nextLevel.getEnemyLayer()));
+        //   currentEnemyLayer.addAll(Arrays.asList(nextLevel.getEnemyLayer()));
     }
 
     private void changeBgLayer() {
@@ -135,7 +134,7 @@ public class LevelRenderer {
     }
 
     private void changeMidLayer() {
-        
+
     }
 
     private void changeEnemyLayer() {
@@ -199,7 +198,13 @@ public class LevelRenderer {
 
     private void repeatEnemyLayer() {
         int[] i = currentEnemyLayer.pollLast();
+        for (int x = 0; x < i.length; x++) {
+            if (i[x] == 1) {
+                enemyManager.spawnObject(1, x * tileHandler.getTileSize(), -tileHandler.getTileSize());
+            }
+        }
         currentEnemyLayer.addFirst(i);
+
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -213,11 +218,9 @@ public class LevelRenderer {
         //Render mid layer
         for (int y = 0; y < currentMidLayer.size(); y++) {
             for (int x = 0; x < currentMidLayer.get(y).length; x++) {
-
+                
             }
         }
-        
-        
     }
 
     public void verboseRender(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -242,7 +245,6 @@ public class LevelRenderer {
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        //Housekeeping
         scrollCounter += scrollSpeed * delta;
         if (scrollCounter >= tileHandler.getTileSize()) {
             if (!loadingNextLevel) {
@@ -254,21 +256,21 @@ public class LevelRenderer {
 //                changeMidLayer();
                 changeEnemyLayer();
             }
+
+            //Spawn enemies according to enemy layer
+            int[] i = currentEnemyLayer.getFirst();
+            for (int x = 0; x < i.length; x++) {
+                if (i[x] == 1) {
+                    enemyManager.spawnObject(1, x * tileHandler.getTileSize(), -tileHandler.getTileSize());
+                }
+            }
             scrollCounter = 0;
         }
 
-        //Spawn enemies according to enemy layer
-        for (int y = 0; y < currentEnemyLayer.size(); y++) {
-            System.out.println("");
-            for (int x = 0; x < currentEnemyLayer.get(y).length; x++) {
-                enemyManager.spawnObject(currentEnemyLayer.get(y)[x], x * 32, y * 32);
-                //System.out.print(currentEnemyLayer.get(y)[x] + ",");
-            }
-        }
     }
 
     public void verboseUpdate(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        
+
     }
 
 }
