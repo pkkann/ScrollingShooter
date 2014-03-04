@@ -17,6 +17,8 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author patrick
  */
 public class OrangeEnemy extends Enemy {
+    
+    private float speed = 0.5f;
 
     public OrangeEnemy(float x, float y) {
         super(x, y);
@@ -30,7 +32,7 @@ public class OrangeEnemy extends Enemy {
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
         g.setColor(Color.orange);
-        g.fillRect(super.getX(), super.getY(), 100, 100);
+        g.fillRect(super.getX(), super.getY(), 32, 32);
     }
 
     @Override

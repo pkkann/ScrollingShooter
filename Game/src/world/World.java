@@ -15,7 +15,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import world.level.LevelRenderer;
-import world.level.MapRenderer;
 
 /**
  *
@@ -37,7 +36,7 @@ public class World {
         tileManager = new TileHandler();
         bulletManager = new BulletManager();
         enemyManager = new EnemyManager();
-        levelRenderer = new LevelRenderer(tileManager);
+        levelRenderer = new LevelRenderer(tileManager, enemyManager);
         levelHandler = new LevelHandler(levelRenderer);
         player = new Player(0, 0, bulletManager);
         worldGUI = new WorldGUI(player);

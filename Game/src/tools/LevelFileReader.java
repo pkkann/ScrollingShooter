@@ -23,6 +23,7 @@ public class LevelFileReader {
     }
 
     public static int[][] readLevel(String path) {
+        //System.out.println("Path: " + path);
         BufferedReader in = null;
         try {
             in = new BufferedReader(new FileReader(path));
@@ -37,6 +38,12 @@ public class LevelFileReader {
                 al.add(ii);
             }
             int[][] iii = al.toArray(new int[al.size()][32]);
+//            for(int y = 0; y < iii.length; y++) {
+//                System.out.println("");
+//                for(int x = 0; x < iii[y].length; x++) {
+//                    System.out.print(iii[y][x] + ",");
+//                }
+//            }
             return iii;
         } catch (FileNotFoundException ex) {
             Logger.getLogger(LevelFileReader.class.getName()).log(Level.SEVERE, null, ex);

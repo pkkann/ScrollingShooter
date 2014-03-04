@@ -17,10 +17,16 @@ public class LevelDefault extends Level {
     private final int[][] bgLayer;
     private final String bgLayer_path;
     
+    private final int[][] enemyLayer;
+    private final String enemyLayer_path;
+    
     public LevelDefault() {
         super("LevelDefault");
-        this.bgLayer_path = "res/levels/defaultLevel.txt";
+        this.bgLayer_path = "res/levels/defaultLevel_bg.txt";
         bgLayer = LevelFileReader.readLevel(bgLayer_path);
+        
+        this.enemyLayer_path = "res/levels/defaultLevel_en.txt";
+        enemyLayer = LevelFileReader.readLevel(bgLayer_path);
     }
     
     @Override
@@ -30,7 +36,7 @@ public class LevelDefault extends Level {
 
     @Override
     public int[][] getEnemyLayer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return enemyLayer;
     }
 
     @Override

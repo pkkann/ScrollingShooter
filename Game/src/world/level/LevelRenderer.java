@@ -5,7 +5,9 @@
  */
 package world.level;
 
+import control.EnemyManager;
 import control.TileHandler;
+import entities.Sprite;
 import java.util.Arrays;
 import java.util.LinkedList;
 import org.newdawn.slick.Color;
@@ -25,6 +27,7 @@ public class LevelRenderer {
     private final LinkedList<int[]> currentEnemyLayer;
 
     private final TileHandler tileHandler;
+    private final EnemyManager enemyManager;
 
     private final float scrollSpeed = 0.1f;
     private float scrollCounter;
@@ -44,8 +47,9 @@ public class LevelRenderer {
     private int nextEnemyLayerArrayPos;
     private int oldEnemyLayerSize;
 
-    public LevelRenderer(TileHandler tileHandler) {
+    public LevelRenderer(TileHandler tileHandler, EnemyManager enemyManager) {
         this.tileHandler = tileHandler;
+        this.enemyManager = enemyManager;
         currentBgLayer = new LinkedList<>();
         currentMidLayer = new LinkedList<>();
         currentEnemyLayer = new LinkedList<>();
@@ -60,15 +64,15 @@ public class LevelRenderer {
 
         nextBgLayerArrayPos = 0;
 //        nextMidLayerArrayPos = 0;
-//        nextEnemyLayerArrayPos = 0;
+        nextEnemyLayerArrayPos = 0;
 
         bgLayerDelta = lev.getBgLayer().length - currentBgLayer.size();
 //        midLayerDelta = lev.getMidLayer().length - currentMidLayer.size();
-//        enemyLayerDelta = lev.getEnemyLayer().length - currentEnemyLayer.size();
+        enemyLayerDelta = lev.getEnemyLayer().length - currentEnemyLayer.size();
 
         oldBgLayerSize = currentBgLayer.size();
 //        oldMidLayerSize = currentMidLayer.size();
-//        oldEnemyLayerSize = currentEnemyLayer.size();
+        oldEnemyLayerSize = currentEnemyLayer.size();
 
         loadingNextLevel = true;
     }
@@ -77,7 +81,7 @@ public class LevelRenderer {
         nextLevel = lev;
         currentBgLayer.addAll(Arrays.asList(nextLevel.getBgLayer()));
 //        currentMidLayer.addAll(Arrays.asList(nextLevel.getMidLayer()));
-//        currentEnemyLayer.addAll(Arrays.asList(nextLevel.getEnemyLayer()));
+        currentEnemyLayer.addAll(Arrays.asList(nextLevel.getEnemyLayer()));
     }
 
     private void changeBgLayer() {
@@ -131,25 +135,71 @@ public class LevelRenderer {
     }
 
     private void changeMidLayer() {
-
+        
     }
 
     private void changeEnemyLayer() {
-
+        if (enemyLayerDelta > 0) { //Hvis det nye map er længere
+            //Hvis vi er nået til den sidste række, så stop med at loade next map
+            if (nextEnemyLayerArrayPos == nextLevel.getEnemyLayer().length - 1) {
+                loadingNextLevel = false;
+                currentEnemyLayer.addFirst(nextLevel.getEnemyLayer()[nextEnemyLayerArrayPos]);
+                nextEnemyLayerArrayPos = 0;
+            } else {
+                //hvis  næste position er større end det gamle maps size, så er hele det gamle map fjernet, og der bliver derfor ikke fjernet fra mappet
+                if (nextEnemyLayerArrayPos >= oldEnemyLayerSize) {
+                    currentEnemyLayer.addFirst(nextLevel.getEnemyLayer()[nextEnemyLayerArrayPos]);
+                    nextEnemyLayerArrayPos++;
+                } else {
+                    //fjern sidste position og sæt en ny række ind fra det nye map
+                    currentEnemyLayer.pollLast();
+                    currentEnemyLayer.addFirst(nextLevel.getEnemyLayer()[nextEnemyLayerArrayPos]);
+                    nextEnemyLayerArrayPos++;
+                }
+            }
+        } else {
+            if (enemyLayerDelta == 0) {
+                if (nextEnemyLayerArrayPos == nextLevel.getEnemyLayer().length - 1) {
+                    loadingNextLevel = false;
+                    currentEnemyLayer.pollLast();
+                    currentEnemyLayer.addFirst(nextLevel.getEnemyLayer()[nextEnemyLayerArrayPos]);
+                    nextEnemyLayerArrayPos = 0;
+                } else {
+                    currentEnemyLayer.pollLast();
+                    currentEnemyLayer.addFirst(nextLevel.getEnemyLayer()[nextEnemyLayerArrayPos]);
+                    nextEnemyLayerArrayPos++;
+                }
+            }
+            if (enemyLayerDelta < 0) {
+                if (nextEnemyLayerArrayPos == nextLevel.getEnemyLayer().length - 1) {
+                    loadingNextLevel = false;
+                    currentEnemyLayer.pollLast();
+                    currentEnemyLayer.addFirst(nextLevel.getEnemyLayer()[nextEnemyLayerArrayPos]);
+                    nextEnemyLayerArrayPos = 0;
+                    for (int y = 0; y > enemyLayerDelta; y--) {
+                        currentEnemyLayer.pollLast();
+                    }
+                } else {
+                    currentEnemyLayer.pollLast();
+                    currentEnemyLayer.addFirst(nextLevel.getEnemyLayer()[nextEnemyLayerArrayPos]);
+                    nextEnemyLayerArrayPos++;
+                }
+            }
+        }
     }
 
     private void repeatBgLayer() {
         int[] i = currentBgLayer.pollLast();
         currentBgLayer.addFirst(i);
-        scrollCounter = 0;
     }
 
     private void repeatMidLayer() {
-        
+
     }
 
     private void repeatEnemyLayer() {
-        
+        int[] i = currentEnemyLayer.pollLast();
+        currentEnemyLayer.addFirst(i);
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -161,18 +211,13 @@ public class LevelRenderer {
         }
 
         //Render mid layer
-        for (int y = 0; y < currentEnemyLayer.size(); y++) {
-            for (int x = 0; x < currentEnemyLayer.get(y).length; x++) {
-
-            }
-        }
-
-        //Render enemy layer
         for (int y = 0; y < currentMidLayer.size(); y++) {
             for (int x = 0; x < currentMidLayer.get(y).length; x++) {
 
             }
         }
+        
+        
     }
 
     public void verboseRender(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -185,11 +230,11 @@ public class LevelRenderer {
             g.drawString("BGLayerDelta: " + bgLayerDelta, container.getWidth() - 250, 40);
             g.drawString("NextBGLayerArrayPos: " + nextBgLayerArrayPos, container.getWidth() - 250, 60);
             g.drawString("OldBgLayerSize: " + oldBgLayerSize, container.getWidth() - 250, 80);
-            
+
             g.drawString("MidLayerDelta: " + midLayerDelta, container.getWidth() - 250, 100);
             g.drawString("NextMidLayerArrayPos: " + nextMidLayerArrayPos, container.getWidth() - 250, 120);
             g.drawString("OldMidLayerSize: " + oldMidLayerSize, container.getWidth() - 250, 140);
-            
+
             g.drawString("EnemyLayerDelta: " + enemyLayerDelta, container.getWidth() - 250, 160);
             g.drawString("NextEnemyLayerArrayPos: " + nextEnemyLayerArrayPos, container.getWidth() - 250, 180);
             g.drawString("OldEnemyLayerSize: " + oldEnemyLayerSize, container.getWidth() - 250, 200);
@@ -203,18 +248,27 @@ public class LevelRenderer {
             if (!loadingNextLevel) {
                 repeatBgLayer();
 //                repeatMidLayer();
-//                repeatEnemyLayer();
+                repeatEnemyLayer();
             } else {
                 changeBgLayer();
 //                changeMidLayer();
-//                changeEnemyLayer();
+                changeEnemyLayer();
             }
             scrollCounter = 0;
+        }
+
+        //Spawn enemies according to enemy layer
+        for (int y = 0; y < currentEnemyLayer.size(); y++) {
+            System.out.println("");
+            for (int x = 0; x < currentEnemyLayer.get(y).length; x++) {
+                enemyManager.spawnObject(currentEnemyLayer.get(y)[x], x * 32, y * 32);
+                //System.out.print(currentEnemyLayer.get(y)[x] + ",");
+            }
         }
     }
 
     public void verboseUpdate(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-
+        
     }
 
 }
