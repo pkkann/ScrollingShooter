@@ -12,7 +12,7 @@ import tools.LevelFileReader;
  *
  * @author patrick
  */
-public class LevelDefault {
+public class LevelDefault implements Level {
     
     private int[][] bgLayer;
     private String bgLayer_path = "res/levels/defaultLevel.txt";
@@ -27,6 +27,11 @@ public class LevelDefault {
     
     public int[][] getBgLayer() {
         return bgLayer;
+    }
+
+    @Override
+    public int[][] getEnemyLayer() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

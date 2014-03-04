@@ -11,7 +11,7 @@ import tools.LevelFileReader;
  *
  * @author patrick
  */
-public class Level1 {
+public class Level1 implements Level {
 
     private int[][] bgLayer;
     private String bgLayer_path = "res/levels/level1.txt";

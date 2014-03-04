@@ -73,7 +73,8 @@ public class World {
         int height = container.getHeight();
 
         tileManager.init(container, game);
-        mapRenderer.loadNewMapInstant(startMap);
+        levelHandler.init(container, game);
+        //mapRenderer.loadNewMapInstant(startMap);
 
         player.setX((width / 2) - (player.getWidth() / 2));
         player.setY(height - player.getHeight() - 90);
@@ -91,6 +92,7 @@ public class World {
     }
 
     public void verboseRender(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+        levelHandler.verboseRender(container, game, g);
         mapRenderer.verboseRender(container, game, g);
         bulletManager.verboseRenderObjects(container, game, g);
         enemyManager.verboseRenderObjects(container, game, g);
@@ -101,6 +103,7 @@ public class World {
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+        levelHandler.update(container, game, delta);
         mapRenderer.update(container, game, delta);
         bulletManager.checkCollisions();
         bulletManager.updateObjects(container, game, delta);
@@ -112,6 +115,7 @@ public class World {
     }
     
     public void verboseUpdate(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+        levelHandler.verboseUpdate(container, game, delta);
         mapRenderer.verboseUpdate(container, game, delta);
         bulletManager.verboseUpdateObjects(container, game, delta);
         enemyManager.verboseUpdateObjects(container, game, delta);
