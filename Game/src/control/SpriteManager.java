@@ -21,6 +21,8 @@ public interface SpriteManager {
     public Sprite spawnObject(int type, float x, float y);
     
     public void removeObjects();
+    
+    public void SetAliveOnObjects();
 
     public void checkCollisions();
     

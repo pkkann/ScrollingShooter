@@ -25,6 +25,7 @@ public class OrangeEnemy extends Enemy {
         this.speed = 0.1f;
         super.setWidth(32);
         super.setHeight(32);
+        super.setLife(100);
     }
 
     @Override
@@ -43,5 +44,7 @@ public class OrangeEnemy extends Enemy {
     public void collision(Sprite s) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
     
 }

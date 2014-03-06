@@ -15,7 +15,6 @@ import world.level.Level;
 import world.level.Level1;
 import world.level.LevelDefault;
 import world.level.LevelRenderer;
-import world.level.MapRenderer;
 
 /**
  *

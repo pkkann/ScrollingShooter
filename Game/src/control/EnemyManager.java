@@ -26,6 +26,10 @@ public class EnemyManager implements SpriteManager {
     public EnemyManager() {
         enemies = new ArrayList<>();
     }
+    
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
 
     @Override
     public Sprite spawnObject(int type, float x, float y) {
@@ -50,11 +54,6 @@ public class EnemyManager implements SpriteManager {
                 i.remove();
             }
         }
-    }
-
-    @Override
-    public void checkCollisions() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -90,6 +89,24 @@ public class EnemyManager implements SpriteManager {
         
         while(i.hasNext()) {
             i.next().verboseUpdate(container, game, delta);
+        }
+    }
+
+    @Override
+    public void checkCollisions() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void SetAliveOnObjects() {
+        Iterator<Enemy> i = enemies.iterator();
+        
+        while(i.hasNext()) {
+            Enemy e = i.next();
+            
+            if(e.getLife() <= 0) {
+                e.setAlive(false);
+            }
         }
     }
 

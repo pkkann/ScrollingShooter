@@ -34,8 +34,8 @@ public class World {
 
     public World() {
         tileManager = new TileHandler();
-        bulletManager = new BulletManager();
         enemyManager = new EnemyManager();
+        bulletManager = new BulletManager(enemyManager);
         levelRenderer = new LevelRenderer(tileManager, enemyManager);
         levelHandler = new LevelHandler(levelRenderer);
         player = new Player(0, 0, bulletManager);
@@ -79,6 +79,7 @@ public class World {
         bulletManager.updateObjects(container, game, delta);
         bulletManager.removeObjects();
         enemyManager.updateObjects(container, game, delta);
+        enemyManager.SetAliveOnObjects();
         enemyManager.removeObjects();
         player.update(container, game, delta);
         worldGUI.update(container, game, delta);
