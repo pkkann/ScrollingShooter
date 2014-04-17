@@ -24,7 +24,7 @@ public class World {
 
     
 
-    private final TileHandler tileManager;
+    private final TileHandler tileHandler;
     private final BulletManager bulletManager;
     private final EnemyManager enemyManager;
     private final LevelRenderer levelRenderer;
@@ -32,13 +32,13 @@ public class World {
     private final Player player;
     private final WorldGUI worldGUI;
 
-    public World() {
-        tileManager = new TileHandler();
-        enemyManager = new EnemyManager();
-        bulletManager = new BulletManager(enemyManager);
-        levelRenderer = new LevelRenderer(tileManager, enemyManager);
-        levelHandler = new LevelHandler(levelRenderer);
-        player = new Player(0, 0, bulletManager);
+    public World(TileHandler tileHandler, BulletManager bulletManager, EnemyManager enemyManager, LevelRenderer levelRenderer, LevelHandler levelHandler, Player player) {
+        this.tileHandler = tileHandler;
+        this.bulletManager = bulletManager;
+        this.enemyManager = enemyManager;
+        this.levelRenderer = levelRenderer;
+        this.levelHandler = levelHandler;
+        this.player = player;
         worldGUI = new WorldGUI(player);
     }
 
@@ -46,7 +46,7 @@ public class World {
         int width = container.getWidth();
         int height = container.getHeight();
 
-        tileManager.init(container, game);
+        tileHandler.init(container, game);
         levelHandler.init(container, game);
 
         player.setX((width / 2) - (player.getWidth() / 2));

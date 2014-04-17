@@ -5,6 +5,11 @@
  */
 package states;
 
+import control.BulletManager;
+import control.EnemyManager;
+import control.LevelHandler;
+import control.TileHandler;
+import entities.player.Player;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -15,6 +20,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import tools.SettingsTool;
 import game.Game;
 import world.World;
+import world.level.LevelRenderer;
 
 /**
  *
@@ -28,10 +34,24 @@ public class PlayState extends BasicGameState {
     private float totalMemory = 0;
     private float freeMemory = 0;
     private float usedMemory = 0;
+    
+    private final TileHandler tileHandler;
+    private final BulletManager bulletManager;
+    private final EnemyManager enemyManager;
+    private final LevelRenderer levelRenderer;
+    private final LevelHandler levelHandler;
+    private final Player player;
 
-    public PlayState(int id) {
+    public PlayState(int id, TileHandler tileHandler, BulletManager bulletManager, EnemyManager enemyManager, LevelRenderer levelRenderer, LevelHandler levelHandler, Player player) {
         this.id = id;
+        this.tileHandler = tileHandler;
+        this.bulletManager = bulletManager;
+        this.enemyManager = enemyManager;
+        this.levelRenderer = levelRenderer;
+        this.levelHandler = levelHandler;
+        this.player = player;
         runtime = Runtime.getRuntime();
+        
     }
 
     @Override
@@ -41,7 +61,7 @@ public class PlayState extends BasicGameState {
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        world = new World();
+        world = new World(tileHandler, bulletManager, enemyManager, levelRenderer, levelHandler, player);
         world.init(container, game);
     }
 

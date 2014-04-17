@@ -6,15 +6,13 @@
 
 package entities.player;
 
+import control.BulletManager;
 import entities.Sprite;
 import entities.bullet.Bullet;
-import control.BulletManager;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -31,15 +29,16 @@ public class Player extends Sprite {
     public Player(float x, float y, BulletManager bManager) {
         super(x, y);
         this.bManager = bManager;
-        try {
-            super.setImg(new Image("res/plane.png"));
-        } catch (SlickException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        super.setWidth(super.getImg().getWidth());
-        super.setHeight(super.getImg().getHeight());
+//        try {
+//            super.setImg(new Image("res/plane.png"));
+//        } catch (SlickException ex) {
+//            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        super.setWidth(super.getImg().getWidth());
+//        super.setHeight(super.getImg().getHeight());
         super.setLife(100);
-        
+        super.setWidth(50);
+        super.setHeight(50);
     }
 
     public float getSpeed() {
@@ -50,11 +49,11 @@ public class Player extends Sprite {
         this.speed = speed;
     }
     
-//    @Override
-//    public void render(GameContainer container, StateBasedGame game, Graphics g) {
-//        g.setColor(Color.blue);
-//        g.fillRect(super.getX(), super.getY(), width, height);
-//    }
+    @Override
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        g.setColor(Color.blue);
+        g.fillRect(super.getX(), super.getY(), width, height);
+    }
     
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
