@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package states;
 
 import entities.player.Player;
 import game.Game;
+import static game.Game.PLAYSTATE;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jellygui.JellyButton;
@@ -24,14 +24,14 @@ import tools.FontTool;
  * @author Patrick
  */
 public class GameOverState extends BasicGameState {
-    
+
     private int id;
-    
+
     private Player player;
-    
+
     private JellyButton startOverButton;
     private JellyButton menuButton;
-    
+
     public GameOverState(int id, Player player) {
         this.id = id;
         this.player = player;
@@ -51,33 +51,29 @@ public class GameOverState extends BasicGameState {
         int lineWidth = 5;
         int width = 200;
         int height = 40;
-        
+
         startOverButton = new JellyButton("START OVER", textColor, FontTool.buttonFont, borderCol, lineWidth, normalCol, hoverCol, width, height) {
-            
+
             @Override
             public void action(GameContainer container, StateBasedGame game) {
                 player.setLife(100);
                 player.setAlive(true);
-                try {
-                    game.getState(Game.PLAYSTATE).init(container, game);
-                } catch (SlickException ex) {
-                    Logger.getLogger(GameOverState.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                player.setScore(0);
+                player.setDeathCount(0);
+                Game.resetGame();
                 game.enterState(Game.PLAYSTATE);
             }
         };
-        
+
         menuButton = new JellyButton("MENU", textColor, FontTool.buttonFont, borderCol, lineWidth, normalCol, hoverCol, width, height) {
-            
+
             @Override
             public void action(GameContainer container, StateBasedGame game) {
                 player.setLife(100);
                 player.setAlive(true);
-                try {
-                    game.getState(Game.PLAYSTATE).init(container, game);
-                } catch (SlickException ex) {
-                    Logger.getLogger(GameOverState.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                player.setScore(0);
+                player.setDeathCount(0);
+                Game.resetGame();
                 game.enterState(Game.MENUSTATE);
             }
         };
@@ -97,5 +93,5 @@ public class GameOverState extends BasicGameState {
         startOverButton.update(container, game, delta);
         menuButton.update(container, game, delta);
     }
-    
+
 }

@@ -38,12 +38,12 @@ public class Game extends StateBasedGame {
     public static final int DEADSTATE = 4;
     public static final int GAMEOVERSTATE = 5;
     
-    private final TileHandler tileManager;
-    private final BulletManager bulletManager;
-    private final EnemyManager enemyManager;
-    private final LevelRenderer levelRenderer;
-    private final LevelHandler levelHandler;
-    private final Player player;
+    private static TileHandler tileManager;
+    private static BulletManager bulletManager;
+    private static EnemyManager enemyManager;
+    private static LevelRenderer levelRenderer;
+    private static LevelHandler levelHandler;
+    private static Player player;
     
     public Game(String name) {
         super(name);
@@ -59,6 +59,15 @@ public class Game extends StateBasedGame {
         AppGameContainer app = new AppGameContainer(new Game(TITLE));
         SettingsTool.getInstance().initLoadProperties(app);
         app.start();
+    }
+    
+    public static void resetGame() {
+        tileManager = new TileHandler();
+        bulletManager = new BulletManager();
+        player = new Player(0, 0, bulletManager);
+        enemyManager = new EnemyManager(player, bulletManager);
+        levelRenderer = new LevelRenderer(tileManager, enemyManager);
+        levelHandler = new LevelHandler(levelRenderer);
     }
 
     @Override

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entities.player;
 
 import control.BulletManager;
@@ -15,18 +14,20 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
+import game.Game;
 
 /**
  *
  * @author Patrick
  */
 public class Player extends Sprite {
-    
+
     private float speed = 0.5f;
     private final BulletManager bManager;
     private final int width = 50;
     private final int height = 50;
     private int score = 0;
+    private int deathCount = 0;
 
     public Player(float x, float y, BulletManager bManager) {
         super(x, y);
@@ -44,6 +45,16 @@ public class Player extends Sprite {
         super.setDamage(100);
     }
 
+    public int getDeathCount() {
+        return deathCount;
+    }
+
+    public void setDeathCount(int deathCount) {
+        this.deathCount = deathCount;
+    }
+    
+    
+
     public int getScore() {
         return score;
     }
@@ -59,45 +70,56 @@ public class Player extends Sprite {
     public void setSpeed(float speed) {
         this.speed = speed;
     }
-    
+
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
         g.setColor(Color.blue);
         g.fillRect(super.getX(), super.getY(), width, height);
     }
-    
+
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
-        super.update(container, game, delta);
+    public void update(GameContainer container, StateBasedGame g, int delta) {
+        super.update(container, g, delta);
         move(container, delta);
+        if (super.getLife() <= 0) {
+            super.setAlive(false);
+            deathCount++;
+        }
+        if (!super.isAlive()) {
+            if (deathCount < 3) {
+                g.enterState(Game.DEADSTATE);
+            } else {
+                g.enterState(Game.GAMEOVERSTATE);
+            }
+        }
     }
-    
+
     private void move(GameContainer container, int delta) {
         Input input = container.getInput();
-        
-        if(input.isKeyDown(Input.KEY_A)) {
+
+        if (input.isKeyDown(Input.KEY_A)) {
             super.setX(super.getX() - speed * delta);
         }
-        
-        if(input.isKeyDown(Input.KEY_D)) {
+
+        if (input.isKeyDown(Input.KEY_D)) {
             super.setX(super.getX() + speed * delta);
         }
-        
-        if(input.isKeyDown(Input.KEY_SPACE)) {
+
+        if (input.isKeyDown(Input.KEY_SPACE)) {
             bManager.spawnObject(Bullet.BULLET_RED, super.getX() + (super.getWidth() / 2) - 6, super.getY() - 10);
         }
-        
-        if(input.isKeyDown(Input.KEY_F)) {
+
+        if (input.isKeyDown(Input.KEY_F)) {
             bManager.spawnObject(Bullet.BULLET_GREEN, super.getX() + (super.getWidth() / 2) - 6, super.getY() - 10);
         }
     }
 
     @Override
     public void collision(Sprite s) {
-        if(s instanceof Enemy) {
+        if (s instanceof Enemy) {
             s.setLife(s.getLife() - this.getDamage());
             this.setLife(this.getLife() - s.getDamage());
         }
     }
-    
+
 }
