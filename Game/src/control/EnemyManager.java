@@ -6,8 +6,10 @@
 package control;
 
 import entities.Sprite;
+import entities.bullet.Bullet;
 import entities.enemy.Enemy;
 import entities.enemy.OrangeEnemy;
+import entities.player.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.newdawn.slick.GameContainer;
@@ -22,8 +24,12 @@ import org.newdawn.slick.state.StateBasedGame;
 public class EnemyManager implements SpriteManager {
 
     private final ArrayList<Enemy> enemies;
+    private Player player;
+    private BulletManager bulletManager;
 
-    public EnemyManager() {
+    public EnemyManager(Player player, BulletManager bulletManager) {
+        this.player = player;
+        this.bulletManager = bulletManager;
         enemies = new ArrayList<>();
     }
     
@@ -50,7 +56,9 @@ public class EnemyManager implements SpriteManager {
         Iterator<Enemy> i = enemies.iterator();
         
         while(i.hasNext()) {
-            if(!i.next().isAlive()) {
+            Enemy e = i.next();
+            if(!e.isAlive()) {
+                player.setScore(player.getScore() + e.getPoint());
                 i.remove();
             }
         }
@@ -94,7 +102,23 @@ public class EnemyManager implements SpriteManager {
 
     @Override
     public void checkCollisions() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Iterator<Enemy> i = enemies.iterator();
+        
+        while(i.hasNext()) {
+            Enemy e = i.next();
+            Iterator<Bullet> ib = bulletManager.getBullets().iterator();
+            while(ib.hasNext()) {
+                Bullet b = ib.next();
+                if(e.getBounds().intersects(b.getBounds())) {
+                    b.setAlive(false);
+                    e.collision(b);
+                }
+            }
+            
+            if(e.getBounds().intersects(player.getBounds())) {
+                player.collision(e);
+            }
+        }
     }
 
     @Override

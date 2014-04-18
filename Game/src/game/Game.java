@@ -12,15 +12,16 @@ import control.LevelHandler;
 import control.TileHandler;
 import entities.player.Player;
 import java.io.IOException;
-import states.MenuState;
-import states.PlayState;
-import states.SettingsState;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import states.DeadState;
+import states.GameOverState;
+import states.MenuState;
+import states.PlayState;
+import states.SettingsState;
 import tools.SettingsTool;
-import world.WorldGUI;
 import world.level.LevelRenderer;
 
 /**
@@ -34,6 +35,8 @@ public class Game extends StateBasedGame {
     public static final int MENUSTATE = 1;
     public static final int PLAYSTATE = 2;
     public static final int SETTINGSSTATE = 3;
+    public static final int DEADSTATE = 4;
+    public static final int GAMEOVERSTATE = 5;
     
     private final TileHandler tileManager;
     private final BulletManager bulletManager;
@@ -45,15 +48,14 @@ public class Game extends StateBasedGame {
     public Game(String name) {
         super(name);
         tileManager = new TileHandler();
-        enemyManager = new EnemyManager();
-        bulletManager = new BulletManager(enemyManager);
+        bulletManager = new BulletManager();
+        player = new Player(0, 0, bulletManager);
+        enemyManager = new EnemyManager(player, bulletManager);
         levelRenderer = new LevelRenderer(tileManager, enemyManager);
         levelHandler = new LevelHandler(levelRenderer);
-        player = new Player(0, 0, bulletManager);
     }
     
     public static void main(String[] args) throws SlickException, IOException {
-        
         AppGameContainer app = new AppGameContainer(new Game(TITLE));
         SettingsTool.getInstance().initLoadProperties(app);
         app.start();
@@ -64,12 +66,16 @@ public class Game extends StateBasedGame {
         addState(new MenuState(MENUSTATE));
         addState(new PlayState(PLAYSTATE, tileManager, bulletManager, enemyManager, levelRenderer, levelHandler, player));
         addState(new SettingsState(SETTINGSSTATE));
+        addState(new DeadState(DEADSTATE, player));
+        addState(new GameOverState(GAMEOVERSTATE, player));
         
         getState(MENUSTATE).init(container, this);
         getState(PLAYSTATE).init(container, this);
         getState(SETTINGSSTATE).init(container, this);
+        getState(DEADSTATE).init(container, this);
+        getState(GAMEOVERSTATE).init(container, this);
         
-        this.enterState(MENUSTATE);
+        this.enterState(GAMEOVERSTATE);
     }
     
     

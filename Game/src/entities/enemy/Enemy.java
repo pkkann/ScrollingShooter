@@ -16,9 +16,21 @@ public abstract class Enemy extends Sprite {
     
     public static final int ENEMY_ORANGE = 1;
 
+    private int point = 1;
+    
     public Enemy(float x, float y) {
         super(x, y);
     }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
+    }
+    
+    
     
     
 }

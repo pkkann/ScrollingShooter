@@ -75,9 +75,9 @@ public class World {
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         levelHandler.update(container, game, delta);
         levelRenderer.update(container, game, delta);
-        bulletManager.checkCollisions();
         bulletManager.updateObjects(container, game, delta);
         bulletManager.removeObjects();
+        enemyManager.checkCollisions();
         enemyManager.updateObjects(container, game, delta);
         enemyManager.SetAliveOnObjects();
         enemyManager.removeObjects();

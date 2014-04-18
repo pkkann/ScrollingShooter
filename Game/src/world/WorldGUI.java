@@ -37,6 +37,7 @@ public class WorldGUI {
         g.fillRect(0, container.getHeight() - 70, container.getWidth(), 70);
         g.setColor(Color.black);
         g.drawString("Life: " + player.getLife(), iX + 20, iY + 25);
+        g.drawString("Score: " + player.getScore(), iX + 20, iY + 40);
     }
     
     public void verboseRender(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {

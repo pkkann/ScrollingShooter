@@ -9,7 +9,6 @@ import entities.Sprite;
 import entities.bullet.Bullet;
 import entities.bullet.GreenBullet;
 import entities.bullet.RedBullet;
-import entities.enemy.Enemy;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.newdawn.slick.GameContainer;
@@ -26,12 +25,13 @@ public class BulletManager implements SpriteManager {
     private final ArrayList<Bullet> bullets;
     private final float topCount = 150;
     private float counter = topCount;
-    
-    private EnemyManager enemyManager;
 
-    public BulletManager(EnemyManager enemyManager) {
-        this.enemyManager = enemyManager;
+    public BulletManager() {
         bullets = new ArrayList<>();
+    }
+    
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
     }
 
     public int getCurrentBulletCount() {
@@ -113,18 +113,7 @@ public class BulletManager implements SpriteManager {
 
     @Override
     public void checkCollisions() {
-        Iterator<Bullet> i = bullets.iterator();
         
-        while(i.hasNext()) {
-            Bullet b = i.next();
-            Iterator<Enemy> i2 = enemyManager.getEnemies().iterator();
-            while(i2.hasNext()) {
-                Enemy e = i2.next();
-                if(b.getBounds().intersects(e.getBounds())) {
-                    b.collision(e);
-                }
-            }
-        }
     }
 
     @Override

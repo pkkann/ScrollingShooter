@@ -9,6 +9,7 @@ package entities.player;
 import control.BulletManager;
 import entities.Sprite;
 import entities.bullet.Bullet;
+import entities.enemy.Enemy;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -25,6 +26,7 @@ public class Player extends Sprite {
     private final BulletManager bManager;
     private final int width = 50;
     private final int height = 50;
+    private int score = 0;
 
     public Player(float x, float y, BulletManager bManager) {
         super(x, y);
@@ -39,6 +41,15 @@ public class Player extends Sprite {
         super.setLife(100);
         super.setWidth(50);
         super.setHeight(50);
+        super.setDamage(100);
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public float getSpeed() {
@@ -83,7 +94,10 @@ public class Player extends Sprite {
 
     @Override
     public void collision(Sprite s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(s instanceof Enemy) {
+            s.setLife(s.getLife() - this.getDamage());
+            this.setLife(this.getLife() - s.getDamage());
+        }
     }
     
 }

@@ -7,6 +7,7 @@
 package entities.enemy;
 
 import entities.Sprite;
+import entities.bullet.Bullet;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -26,6 +27,8 @@ public class OrangeEnemy extends Enemy {
         super.setWidth(32);
         super.setHeight(32);
         super.setLife(100);
+        super.setPoint(1);
+        super.setDamage(20);
     }
 
     @Override
@@ -42,7 +45,10 @@ public class OrangeEnemy extends Enemy {
 
     @Override
     public void collision(Sprite s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //Check if bullet
+        if(s instanceof Bullet) {
+            this.setLife(this.getLife() - s.getDamage());
+        }
     }
 
    
