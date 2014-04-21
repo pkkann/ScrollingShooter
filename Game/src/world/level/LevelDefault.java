@@ -26,7 +26,7 @@ public class LevelDefault extends Level {
         bgLayer = LevelFileReader.readLevel(bgLayer_path);
         
         this.enemyLayer_path = "res/levels/defaultLevel_en.txt";
-        enemyLayer = LevelFileReader.readLevel(bgLayer_path);
+        enemyLayer = LevelFileReader.readLevel(enemyLayer_path);
     }
     
     @Override

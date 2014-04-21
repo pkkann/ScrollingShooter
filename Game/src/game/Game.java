@@ -17,7 +17,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import states.DeadState;
-import states.GameOverState;
 import states.MenuState;
 import states.PlayState;
 import states.SettingsState;
@@ -60,15 +59,6 @@ public class Game extends StateBasedGame {
         SettingsTool.getInstance().initLoadProperties(app);
         app.start();
     }
-    
-    public static void resetGame() {
-        tileManager = new TileHandler();
-        bulletManager = new BulletManager();
-        player = new Player(0, 0, bulletManager);
-        enemyManager = new EnemyManager(player, bulletManager);
-        levelRenderer = new LevelRenderer(tileManager, enemyManager);
-        levelHandler = new LevelHandler(levelRenderer);
-    }
 
     @Override
     public void initStatesList(GameContainer container) throws SlickException {
@@ -76,15 +66,13 @@ public class Game extends StateBasedGame {
         addState(new PlayState(PLAYSTATE, tileManager, bulletManager, enemyManager, levelRenderer, levelHandler, player));
         addState(new SettingsState(SETTINGSSTATE));
         addState(new DeadState(DEADSTATE, player));
-        addState(new GameOverState(GAMEOVERSTATE, player));
         
         getState(MENUSTATE).init(container, this);
         getState(PLAYSTATE).init(container, this);
         getState(SETTINGSSTATE).init(container, this);
         getState(DEADSTATE).init(container, this);
-        getState(GAMEOVERSTATE).init(container, this);
         
-        this.enterState(GAMEOVERSTATE);
+        this.enterState(MENUSTATE);
     }
     
     

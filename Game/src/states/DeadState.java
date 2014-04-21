@@ -8,6 +8,8 @@ package states;
 
 import entities.player.Player;
 import game.Game;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jellygui.JellyButton;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -27,8 +29,7 @@ public class DeadState extends BasicGameState {
     
     private Player player;
     
-    private JellyButton continueButton;
-    private JellyButton menuButton;
+    private JellyButton endButton;
     
     public DeadState(int id, Player player) {
         this.id = id;
@@ -50,23 +51,11 @@ public class DeadState extends BasicGameState {
         int width = 200;
         int height = 40;
         
-        continueButton = new JellyButton("CONTINUE", textColor, FontTool.buttonFont, borderCol, lineWidth, normalCol, hoverCol, width, height) {
+        endButton = new JellyButton("EXIT", textColor, FontTool.buttonFont, borderCol, lineWidth, normalCol, hoverCol, width, height) {
             
             @Override
             public void action(GameContainer container, StateBasedGame game) {
-                player.setLife(100);
-                player.setAlive(true);
-                game.enterState(Game.PLAYSTATE);
-            }
-        };
-        
-        menuButton = new JellyButton("MENU", textColor, FontTool.buttonFont, borderCol, lineWidth, normalCol, hoverCol, width, height) {
-            
-            @Override
-            public void action(GameContainer container, StateBasedGame game) {
-                player.setLife(100);
-                player.setAlive(true);
-                game.enterState(Game.MENUSTATE);
+                container.exit();
             }
         };
     }
@@ -76,14 +65,15 @@ public class DeadState extends BasicGameState {
         g.setFont(FontTool.titleFont);
         g.setColor(Color.white);
         g.drawString("You Died", 430, 250);
-        continueButton.draw(g, 410, 300);
-        menuButton.draw(g, 410, 350);
+        g.setFont(FontTool.smallTitleFont);
+        g.setColor(Color.white);
+        g.drawString("Your score: " + player.getScore(), 425, 300);
+        endButton.draw(g, 413, 360);
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        continueButton.update(container, game, delta);
-        menuButton.update(container, game, delta);
+        endButton.update(container, game, delta);
     }
     
 }

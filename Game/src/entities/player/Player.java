@@ -86,11 +86,7 @@ public class Player extends Sprite {
             deathCount++;
         }
         if (!super.isAlive()) {
-            if (deathCount < 3) {
-                g.enterState(Game.DEADSTATE);
-            } else {
-                g.enterState(Game.GAMEOVERSTATE);
-            }
+            g.enterState(Game.DEADSTATE);
         }
     }
 
