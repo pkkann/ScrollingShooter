@@ -7,7 +7,6 @@ package control;
 
 import entities.Sprite;
 import entities.bullet.Bullet;
-import entities.bullet.GreenBullet;
 import entities.bullet.RedBullet;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,23 +39,25 @@ public class BulletManager implements SpriteManager {
 
     @Override
     public Sprite spawnObject(int type, float x, float y) {
-        Bullet b = null;
         if (counter <= 0) {
 
             switch (type) {
                 case Bullet.BULLET_RED:
-                    b = new RedBullet(x, y);
+                    Bullet b = new RedBullet(x, y);
                     bullets.add(b);
-                    break;
-                case Bullet.BULLET_GREEN:
-                    b = new GreenBullet(x, y);
-                    bullets.add(b);
-                    break;
+                    counter = topCount;
+                    return b;
+                case Bullet.BULLET_RED_MULTI:
+                    Bullet b1 = new RedBullet(x, y);
+                    Bullet b2 = new RedBullet(x + 45, y);
+                    Bullet b3 = new RedBullet(x - 45, y);
+                    counter = topCount;
+                    return b1;
             }
 
             counter = topCount;
         }
-        return b;
+        return null;
     }
 
     @Override

@@ -104,10 +104,6 @@ public class Player extends Sprite {
         if (input.isKeyDown(Input.KEY_SPACE)) {
             bManager.spawnObject(Bullet.BULLET_RED, super.getX() + (super.getWidth() / 2) - 6, super.getY() - 10);
         }
-
-        if (input.isKeyDown(Input.KEY_F)) {
-            bManager.spawnObject(Bullet.BULLET_GREEN, super.getX() + (super.getWidth() / 2) - 6, super.getY() - 10);
-        }
     }
 
     @Override

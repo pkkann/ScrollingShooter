@@ -19,7 +19,7 @@ public abstract class Bullet extends Sprite {
     private float speed;
     
     public static final int BULLET_RED = 0;
-    public static final int BULLET_GREEN = 1;
+    public static final int BULLET_RED_MULTI = 1;
 
     public Bullet(float x, float y) {
         super(x, y);
