@@ -72,7 +72,7 @@ public class Game extends StateBasedGame {
         getState(SETTINGSSTATE).init(container, this);
         getState(DEADSTATE).init(container, this);
         
-        this.enterState(MENUSTATE);
+        this.enterState(DEADSTATE);
     }
     
     

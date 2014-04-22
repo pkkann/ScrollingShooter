@@ -3,13 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package states;
 
 import entities.player.Player;
-import game.Game;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import jellygui.JellyButton;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -24,13 +20,15 @@ import tools.FontTool;
  * @author Patrick
  */
 public class DeadState extends BasicGameState {
-    
+
     private int id;
-    
+
     private Player player;
-    
+
     private JellyButton endButton;
-    
+
+    private String scoreName = "";
+
     public DeadState(int id, Player player) {
         this.id = id;
         this.player = player;
@@ -50,9 +48,9 @@ public class DeadState extends BasicGameState {
         int lineWidth = 5;
         int width = 200;
         int height = 40;
-        
+
         endButton = new JellyButton("EXIT", textColor, FontTool.buttonFont, borderCol, lineWidth, normalCol, hoverCol, width, height) {
-            
+
             @Override
             public void action(GameContainer container, StateBasedGame game) {
                 container.exit();
@@ -68,12 +66,13 @@ public class DeadState extends BasicGameState {
         g.setFont(FontTool.smallTitleFont);
         g.setColor(Color.white);
         g.drawString("Your score: " + player.getScore(), 425, 300);
-        endButton.draw(g, 413, 360);
+        g.drawString("Your name: " + scoreName, 425, 340);
+        endButton.draw(g, 413, 390);
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         endButton.update(container, game, delta);
     }
-    
+
 }

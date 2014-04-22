@@ -38,6 +38,7 @@ public class BulletManager implements SpriteManager {
     }
 
     @Override
+    // Return type doesnt matter anymore
     public Sprite spawnObject(int type, float x, float y) {
         if (counter <= 0) {
 
