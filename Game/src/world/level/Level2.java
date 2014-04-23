@@ -3,28 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package world.level;
 
 import tools.LevelFileReader;
 
 /**
  *
- * @author patrick
+ * @author Patrick
  */
-public class Level1 extends Level {
-
+public class Level2 extends Level {
+    
     private final int[][] bgLayer;
     private final String bgLayer_path;
     
     private final int[][] enemyLayer;
     private final String enemyLayer_Path;
 
-    public Level1() {
-        super("Level 1");
-        this.bgLayer_path = "res/levels/level1_bg.txt";
+    public Level2() {
+        super("Level 2");
+        this.bgLayer_path = "res/levels/level2_bg.txt";
         bgLayer = LevelFileReader.readLevel(bgLayer_path);
         
-        this.enemyLayer_Path = "res/levels/level1_en.txt";
+        this.enemyLayer_Path = "res/levels/level2_en.txt";
         enemyLayer = LevelFileReader.readLevel(enemyLayer_Path);
     }
 
@@ -42,5 +43,5 @@ public class Level1 extends Level {
     public int[][] getMidLayer() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
 }

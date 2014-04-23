@@ -56,11 +56,13 @@ public class World {
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+        
         levelRenderer.render(container, game, g);
         bulletManager.renderObjects(container, game, g);
         enemyManager.renderObjects(container, game, g);
         player.render(container, game, g);
         worldGUI.render(container, game, g);
+        levelHandler.render(container, game, g);
     }
 
     public void verboseRender(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
