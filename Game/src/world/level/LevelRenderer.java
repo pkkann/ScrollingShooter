@@ -28,7 +28,7 @@ public class LevelRenderer {
     private final TileHandler tileHandler;
     private final EnemyManager enemyManager;
 
-    private final float scrollSpeed = 0.09f;
+    private final float scrollSpeed = 0.20f;
     private float scrollCounter;
 
     private Level nextLevel;

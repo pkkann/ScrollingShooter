@@ -9,12 +9,17 @@ import control.BulletManager;
 import entities.Sprite;
 import entities.bullet.Bullet;
 import entities.enemy.Enemy;
+import entities.enemy.OrangeEnemy;
+import game.Game;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-import game.Game;
 
 /**
  *
@@ -27,33 +32,23 @@ public class Player extends Sprite {
     private final int width = 50;
     private final int height = 50;
     private int score = 0;
-    private int deathCount = 0;
 
     public Player(float x, float y, BulletManager bManager) {
         super(x, y);
         this.bManager = bManager;
-//        try {
-//            super.setImg(new Image("res/plane.png"));
-//        } catch (SlickException ex) {
-//            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        super.setWidth(super.getImg().getWidth());
-//        super.setHeight(super.getImg().getHeight());
         super.setLife(100);
         super.setWidth(50);
         super.setHeight(50);
         super.setDamage(100);
+        try {
+            Image img = new Image("res/tiles/player.png");
+            super.setImg(img);
+            super.setImageWidth(img.getWidth());
+            super.setImageHeight(img.getHeight());
+        } catch (SlickException ex) {
+            Logger.getLogger(OrangeEnemy.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-
-    public int getDeathCount() {
-        return deathCount;
-    }
-
-    public void setDeathCount(int deathCount) {
-        this.deathCount = deathCount;
-    }
-    
-    
 
     public int getScore() {
         return score;
@@ -73,8 +68,9 @@ public class Player extends Sprite {
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        g.setColor(Color.blue);
-        g.fillRect(super.getX(), super.getY(), width, height);
+        //g.setColor(Color.blue);
+        //g.fillRect(super.getX(), super.getY(), width, height);
+        super.getImg().draw(super.getX(), super.getY());
     }
 
     @Override
@@ -83,7 +79,6 @@ public class Player extends Sprite {
         move(container, delta);
         if (super.getLife() <= 0) {
             super.setAlive(false);
-            deathCount++;
         }
         if (!super.isAlive()) {
             g.enterState(Game.DEADSTATE);
@@ -94,11 +89,15 @@ public class Player extends Sprite {
         Input input = container.getInput();
 
         if (input.isKeyDown(Input.KEY_A)) {
-            super.setX(super.getX() - speed * delta);
+            if (super.getX() >= 20) {
+                super.setX(super.getX() - speed * delta);
+            }
         }
 
         if (input.isKeyDown(Input.KEY_D)) {
-            super.setX(super.getX() + speed * delta);
+            if (super.getX() < (container.getWidth() - 50)) {
+                super.setX(super.getX() + speed * delta);
+            }
         }
 
         if (input.isKeyDown(Input.KEY_SPACE)) {

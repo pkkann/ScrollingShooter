@@ -43,9 +43,21 @@ public class Game extends StateBasedGame {
     private static LevelRenderer levelRenderer;
     private static LevelHandler levelHandler;
     private static Player player;
+    private static Game g;
     
     public Game(String name) {
         super(name);
+        
+    }
+    
+    public static void main(String[] args) throws SlickException, IOException {
+        g = new Game(TITLE);
+        AppGameContainer app = new AppGameContainer(g);
+        SettingsTool.getInstance().initLoadProperties(app);
+        app.start();
+    }
+    
+    private void init() {
         tileManager = new TileHandler();
         bulletManager = new BulletManager();
         player = new Player(0, 0, bulletManager);
@@ -53,26 +65,23 @@ public class Game extends StateBasedGame {
         levelRenderer = new LevelRenderer(tileManager, enemyManager);
         levelHandler = new LevelHandler(levelRenderer);
     }
-    
-    public static void main(String[] args) throws SlickException, IOException {
-        AppGameContainer app = new AppGameContainer(new Game(TITLE));
-        SettingsTool.getInstance().initLoadProperties(app);
-        app.start();
-    }
 
     @Override
     public void initStatesList(GameContainer container) throws SlickException {
+        g.init();
         addState(new MenuState(MENUSTATE));
         addState(new PlayState(PLAYSTATE, tileManager, bulletManager, enemyManager, levelRenderer, levelHandler, player));
         addState(new SettingsState(SETTINGSSTATE));
         addState(new DeadState(DEADSTATE, player));
+        
+        
         
         getState(MENUSTATE).init(container, this);
         getState(PLAYSTATE).init(container, this);
         getState(SETTINGSSTATE).init(container, this);
         getState(DEADSTATE).init(container, this);
         
-        this.enterState(DEADSTATE);
+        this.enterState(MENUSTATE);
     }
     
     

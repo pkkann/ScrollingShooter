@@ -8,9 +8,13 @@ package entities.enemy;
 
 import entities.Sprite;
 import entities.bullet.Bullet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -23,12 +27,20 @@ public class OrangeEnemy extends Enemy {
 
     public OrangeEnemy(float x, float y) {
         super(x,y);
-        this.speed = 0.1f;
+        this.speed = 0.28f;
         super.setWidth(32);
         super.setHeight(32);
         super.setLife(100);
         super.setPoint(1);
         super.setDamage(20);
+        try {
+            Image img = new Image("res/tiles/defaultEnemy.png");
+            super.setImg(img);
+            super.setImageWidth(img.getWidth());
+            super.setImageHeight(img.getHeight());
+        } catch (SlickException ex) {
+            Logger.getLogger(OrangeEnemy.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -39,8 +51,9 @@ public class OrangeEnemy extends Enemy {
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        g.setColor(Color.orange);
-        g.fillRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
+//        g.setColor(Color.orange);
+//        g.fillRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
+        super.getImg().draw(super.getX(), super.getY());
     }
 
     @Override

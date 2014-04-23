@@ -66,8 +66,7 @@ public class DeadState extends BasicGameState {
         g.setFont(FontTool.smallTitleFont);
         g.setColor(Color.white);
         g.drawString("Your score: " + player.getScore(), 425, 300);
-        g.drawString("Your name: " + scoreName, 425, 340);
-        endButton.draw(g, 413, 390);
+        endButton.draw(g, 413, 360);
     }
 
     @Override

@@ -55,8 +55,6 @@ public class BulletManager implements SpriteManager {
                     counter = topCount;
                     return b1;
             }
-
-            counter = topCount;
         }
         return null;
     }
