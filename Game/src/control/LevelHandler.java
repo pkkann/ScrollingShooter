@@ -14,6 +14,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import tools.FontTool;
 import world.level.Level;
 import world.level.Level1;
+import world.level.Level2;
 import world.level.LevelDefault;
 import world.level.LevelRenderer;
 
@@ -24,6 +25,7 @@ import world.level.LevelRenderer;
 public class LevelHandler {
 
     private Level1 level1;
+    private Level2 level2;
     private LevelDefault levelDefault;
 
     private final LevelRenderer levelRenderer;
@@ -40,9 +42,11 @@ public class LevelHandler {
 
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         level1 = new Level1();
+        level2 = new Level2();
         levelDefault = new LevelDefault();
 
         levels.add(level1);
+        levels.add(level2);
         levels.add(levelDefault);
         currentLevel = levelDefault;
         
