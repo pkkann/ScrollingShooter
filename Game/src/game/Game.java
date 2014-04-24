@@ -54,6 +54,7 @@ public class Game extends StateBasedGame {
         g = new Game(TITLE);
         AppGameContainer app = new AppGameContainer(g);
         SettingsTool.getInstance().initLoadProperties(app);
+        app.setTargetFrameRate(60);
         app.start();
     }
     

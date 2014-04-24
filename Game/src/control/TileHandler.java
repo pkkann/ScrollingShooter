@@ -28,7 +28,7 @@ public class TileHandler {
     }
 
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        tileSheet = new Image("res/tiles/tilesheet_environment.png");
+        tileSheet = new Image("res/tiles/Tilesheet_environment.png");
     }
 
     public int getTileSize() {
